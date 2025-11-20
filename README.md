@@ -90,21 +90,30 @@ sudo meson install -C builddir
 
 ### Packages
 
-**RPM** (openSUSE, Fedora):
-- openSUSE Tumbleweed, Leap 16, Fedora 42, 43  
+**openSUSE**:
+- openSUSE Tumbleweed, Leap 16  
   [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery&package=datarecovery)
 
-**DEB** (Ubuntu, Debian):
+**Fedora**:
+- Install from Copr:
+  ```bash
+  sudo dnf copr enable koxt2/datarecovery
+  sudo dnf install datarecovery
+  ```
+  [View on Copr](https://copr.fedorainfracloud.org/coprs/koxt2/datarecovery/)
+
+**Ubuntu/Debian**:
 - Ubuntu 24.04, 25.04, Debian 12, 13  
   [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery%3Adeb&package=datarecovery)
 
 **Arch Linux**:
-- Install from AUR: [datarecovery](https://aur.archlinux.org/packages/datarecovery)
+- Install from AUR:
   ```bash
   yay -S datarecovery
   # or
   paru -S datarecovery
   ```
+  [View on AUR](https://aur.archlinux.org/packages/datarecovery)
 
 ---
 
