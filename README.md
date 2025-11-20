@@ -90,16 +90,21 @@ sudo meson install -C builddir
 
 ### Packages
 
-Available from openSUSE Build Service:
-
-- **RPM**: openSUSE Tumbleweed, Leap 16, Fedora 42, 43  
+**RPM** (openSUSE, Fedora):
+- openSUSE Tumbleweed, Leap 16, Fedora 42, 43  
   [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery&package=datarecovery)
 
-- **DEB**: Ubuntu 24.04, 25.04, Debian 12, 13  
+**DEB** (Ubuntu, Debian):
+- Ubuntu 24.04, 25.04, Debian 12, 13  
   [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery%3Adeb&package=datarecovery)
 
-- **Arch**: Arch Extra  
-  [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery%3Aarch&package=datarecovery)
+**Arch Linux**:
+- Install from AUR: [datarecovery](https://aur.archlinux.org/packages/datarecovery)
+  ```bash
+  yay -S datarecovery
+  # or
+  paru -S datarecovery
+  ```
 
 ---
 
