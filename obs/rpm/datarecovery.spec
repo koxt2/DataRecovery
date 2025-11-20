@@ -22,17 +22,10 @@ BuildRequires:  desktop-file-utils
 
 Requires:       python3
 Requires:       python3-gobject
-%if 0%{?fedora}
-Requires:       gtk4
-Requires:       libadwaita
-Requires:       ddrescue
-Requires:       testdisk
-%else
 Requires:       typelib(Gtk) = 4.0
 Requires:       typelib(Adw) = 1
 Requires:       gnu_ddrescue
 Requires:       photorec
-%endif
 Requires:       rdfind
 Requires:       udisks2
 Requires:       polkit
