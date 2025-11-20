@@ -18,21 +18,21 @@ depends=(
   'polkit'
 )
 makedepends=('meson' 'ninja')
-source=("main.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::https://github.com/koxt2/DataRecovery/archive/refs/tags/v$pkgver.tar.gz")
 sha256sums=('SKIP')
 
 build() {
-  cd "DataRecovery-main"
+  cd "DataRecovery-$pkgver"
   meson setup builddir --prefix=/usr
   meson compile -C builddir
 }
 
 check() {
-  cd "DataRecovery-main"
+  cd "DataRecovery-$pkgver"
   meson test -C builddir --print-errorlogs || true
 }
 
 package() {
-  cd "DataRecovery-main"
+  cd "DataRecovery-$pkgver"
   DESTDIR="$pkgdir" meson install -C builddir
 }

@@ -18,11 +18,6 @@
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-"""
-Configuration constants for the Data Recovery application.
-Centralizes all hardcoded values and magic numbers.
-"""
-
 # Application version (set by meson during build)
 VERSION = '@VERSION@'
 
