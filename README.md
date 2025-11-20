@@ -92,10 +92,10 @@ sudo meson install -C builddir
 
 Available from openSUSE Build Service:
 
-- **RPM**: openSUSE Tumbleweed, Fedora 42 (Tested)  
+- **RPM**: openSUSE Tumbleweed, Leap 16, Fedora 42, 43  
   [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery&package=datarecovery)
 
-- **DEB**: Ubuntu 24.04, 25.04, Mint 22.2, Debian 13 (Tested on Mint 22.2)  
+- **DEB**: Ubuntu 24.04, 25.04, Debian 12, 13  
   [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery%3Adeb&package=datarecovery)
 
 - **Arch**: Arch Extra  
