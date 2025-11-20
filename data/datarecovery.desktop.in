@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Data Recovery
+Comment=Data recovery using ddrescue and PhotoRec
+GenericName=Data Recovery Tool
+Exec=datarecovery
+Icon=datarecovery
+Terminal=false
+Type=Application
+Categories=Utility;System;
+Keywords=data;recovery;ddrescue;photorec;rescue;forensics;
+StartupNotify=true

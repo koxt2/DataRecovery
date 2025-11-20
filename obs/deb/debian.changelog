@@ -1,0 +1,13 @@
+datarecovery (0.1.0-1) unstable; urgency=medium
+
+  * Initial release
+  * GTK4/Libadwaita-based user interface for data recovery
+  * Integration with ddrescue for disk imaging
+  * Integration with PhotoRec for file recovery
+  * Automatic file organization by type
+  * Duplicate file detection and removal using rdfind
+  * Disk space checking before imaging and recovery operations
+  * Polkit integration for elevated permissions
+  * Multi-distro packaging support (RPM, DEB, Arch Linux)
+
+ -- koxt2 <koxt2@protonmail.com>  Wed, 20 Nov 2025 10:00:00 +0000

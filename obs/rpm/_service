@@ -1,0 +1,21 @@
+<services>
+  <service name="obs_scm">
+    <param name="url">https://github.com/koxt2/DataRecovery.git</param>
+    <param name="scm">git</param>
+    <param name="revision">main</param>
+    <param name="version">_auto_</param>
+    <param name="versionformat">0.1.0+git.%h</param>
+    <param name="changesgenerate">enable</param>
+    <param name="filename">datarecovery</param>
+    <param name="extract">obs/rpm/datarecovery.spec</param>
+    <param name="extract">obs/rpm/datarecovery.rpmlintrc</param>
+  </service>
+  <service name="tar" mode="buildtime"/>
+  <service name="recompress" mode="buildtime">
+    <param name="file">*.tar</param>
+    <param name="compression">xz</param>
+  </service>
+  <service name="set_version" mode="buildtime">
+    <param name="file">datarecovery.spec</param>
+  </service>
+</services>

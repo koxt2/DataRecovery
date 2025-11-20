@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<services>
+  <service name="download_url">
+    <param name="protocol">https</param>
+    <param name="host">github.com</param>
+    <param name="path">/koxt2/DataRecovery/archive/refs/heads/main.tar.gz</param>
+  </service>
+</services>

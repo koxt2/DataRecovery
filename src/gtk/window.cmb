@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<!-- Created with Cambalache 0.96.1 -->
+<cambalache-project version="0.96.0" target_tk="gtk-4.0">
+  <ui template-class="DatarecoveryWindow" filename="window.ui" sha256="a2508de34b60fc945beec69d4cd374f5e6334f22248785297f4ffe7beeef0bd8"/>
+</cambalache-project>

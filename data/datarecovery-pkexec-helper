@@ -1,0 +1,131 @@
+#!/bin/bash
+# datarecovery-pkexec-helper
+#
+# Privileged helper script for DataRecovery
+# Runs ddrescue operations and changes file ownership
+# This script accepts structured arguments instead of executing arbitrary scripts
+#
+# Copyright 2025 koxt2
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+set -e
+
+# Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path> <uid> <gid>
+if [ $# -ne 5 ]; then
+    echo "Error: Invalid arguments" >&2
+    echo "Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path> <uid> <gid>" >&2
+    exit 1
+fi
+
+DEVICE_PATH="$1"
+IMAGE_PATH="$2"
+MAPFILE_PATH="$3"
+OWNER_UID="$4"
+OWNER_GID="$5"
+
+# Validate device path (must be a block device in /dev)
+if [ ! -b "$DEVICE_PATH" ]; then
+    echo "Error: Device path is not a block device: $DEVICE_PATH" >&2
+    exit 1
+fi
+
+# Device must be under /dev/ (not a symlink to elsewhere)
+REAL_DEVICE=$(realpath "$DEVICE_PATH")
+if [[ "$REAL_DEVICE" != /dev/* ]]; then
+    echo "Error: Device path must be under /dev: $DEVICE_PATH" >&2
+    exit 1
+fi
+
+# Validate that image and mapfile paths are in safe locations
+# Whitelist of allowed path prefixes for output files
+ALLOWED_PREFIXES=(
+    "/home/"
+    "/tmp/"
+    "/var/tmp/"
+    "$HOME/"
+)
+
+validate_output_path() {
+    local path="$1"
+    local path_type="$2"
+    
+    # Resolve to absolute path
+    local dir=$(dirname "$path")
+    if [ ! -d "$dir" ]; then
+        echo "Error: Parent directory does not exist for $path_type: $dir" >&2
+        exit 1
+    fi
+    
+    local real_path=$(realpath -m "$path")
+    
+    # Check against whitelist
+    local allowed=false
+    for prefix in "${ALLOWED_PREFIXES[@]}"; do
+        # Expand variables like $HOME
+        prefix=$(eval echo "$prefix")
+        if [[ "$real_path" == "$prefix"* ]]; then
+            allowed=true
+            break
+        fi
+    done
+    
+    if [ "$allowed" = false ]; then
+        echo "Error: $path_type path not in allowed location: $path" >&2
+        echo "Allowed prefixes: ${ALLOWED_PREFIXES[*]}" >&2
+        exit 1
+    fi
+}
+
+validate_output_path "$IMAGE_PATH" "Image"
+validate_output_path "$MAPFILE_PATH" "Mapfile"
+
+# Validate UID and GID are numeric
+if ! [[ "$OWNER_UID" =~ ^[0-9]+$ ]] || ! [[ "$OWNER_GID" =~ ^[0-9]+$ ]]; then
+    echo "Error: Invalid UID or GID format" >&2
+    exit 1
+fi
+
+# Validate UID and GID are not root (0) and are within reasonable range
+# Typical user UIDs start at 1000 on most Linux systems
+if [ "$OWNER_UID" -eq 0 ] || [ "$OWNER_GID" -eq 0 ]; then
+    echo "Error: Cannot set ownership to root (UID/GID 0)" >&2
+    exit 1
+fi
+
+if [ "$OWNER_UID" -lt 1000 ] || [ "$OWNER_UID" -gt 65533 ]; then
+    echo "Error: UID out of reasonable range (1000-65533): $OWNER_UID" >&2
+    exit 1
+fi
+
+if [ "$OWNER_GID" -lt 1000 ] || [ "$OWNER_GID" -gt 65533 ]; then
+    echo "Error: GID out of reasonable range (1000-65533): $OWNER_GID" >&2
+    exit 1
+fi
+
+# Run ddrescue - 4 passes as per application design
+RETRY_PASSES=3
+
+echo "Starting ddrescue imaging of $DEVICE_PATH"
+
+# Pass 1: Fast copy without retries
+echo "Pass 1/4: Fast copy"
+ddrescue --force --no-scrape --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+
+# Pass 2: Retry with direct I/O
+echo "Pass 2/4: Direct I/O retry"
+ddrescue --force --idirect --retry-passes=$RETRY_PASSES --no-scrape --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+
+# Pass 3: Reverse retry
+echo "Pass 3/4: Reverse retry"
+ddrescue --force --idirect --retry-passes=$RETRY_PASSES --reverse --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+
+# Pass 4: Final scraping
+echo "Pass 4/4: Final scraping"
+ddrescue --force --idirect --retry-passes=$RETRY_PASSES --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+
+# Change ownership of created files back to the user
+echo "Changing ownership to $OWNER_UID:$OWNER_GID"
+chown "$OWNER_UID:$OWNER_GID" "$IMAGE_PATH" "$MAPFILE_PATH"
+
+echo "Imaging completed successfully"
+exit 0

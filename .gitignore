@@ -1,0 +1,13 @@
+# Build directories
+builddir/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Ignore help files
+help.txt
+help2.txt
+
+# OBS arch README (workflow documentation only)
+obs/arch/README.md

@@ -1,0 +1,274 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
+<interface>
+  <!-- interface-name window.ui -->
+  <requires lib="Adw" version="1.0"/>
+  <requires lib="gio" version="2.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.7"/>
+  <template class="DatarecoveryWindow" parent="AdwApplicationWindow">
+    <property name="content">
+      <object class="AdwToolbarView">
+        <property name="content">
+          <object class="AdwToastOverlay" id="toaster">
+            <property name="child">
+              <object class="GtkBox">
+                <property name="margin-bottom">10</property>
+                <property name="margin-end">50</property>
+                <property name="margin-start">50</property>
+                <property name="margin-top">10</property>
+                <property name="orientation">vertical</property>
+                <property name="overflow">hidden</property>
+                <property name="spacing">5</property>
+                <child>
+                  <object class="GtkBox" id="device_selection_box">
+                    <property name="focusable">True</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkListBox">
+                        <property name="css-classes">boxed-list</property>
+                        <child>
+                          <object class="AdwActionRow">
+                            <property name="child">
+                              <object class="GtkDropDown" id="select_device_dropdown">
+                                <property name="model">
+                                  <object class="GListStore" id="device_liststore"/>
+                                </property>
+                              </object>
+                            </property>
+                            <property name="focus-on-click">False</property>
+                            <property name="focusable">False</property>
+                            <property name="selectable">False</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="device_settings_box">
+                    <property name="focus-on-click">False</property>
+                    <property name="homogeneous">True</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">50</property>
+                    <child>
+                      <object class="GtkBox" id="device_box">
+                        <property name="orientation">vertical</property>
+                        <property name="vexpand">True</property>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hexpand">True</property>
+                            <property name="vexpand">True</property>
+                            <property name="window-placement">bottom-left</property>
+                            <child>
+                              <object class="GtkColumnView">
+                                <property name="css-classes">card</property>
+                                <property name="hexpand">True</property>
+                                <property name="model">
+                                  <object class="GtkSingleSelection" id="columnview_model">
+                                    <property name="model">
+                                      <object class="GListStore" id="columnview_liststore"/>
+                                    </property>
+                                  </object>
+                                </property>
+                                <property name="reorderable">False</property>
+                                <property name="vexpand">True</property>
+                                <child>
+                                  <object class="GtkColumnViewColumn" id="mounted">
+                                    <property name="factory">
+                                      <object class="GtkSignalListItemFactory" id="mounted_factory"/>
+                                    </property>
+                                    <property name="title">Mounted</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn" id="device_path">
+                                    <property name="factory">
+                                      <object class="GtkSignalListItemFactory" id="device_path_factory"/>
+                                    </property>
+                                    <property name="title">Device</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn" id="size">
+                                    <property name="factory">
+                                      <object class="GtkSignalListItemFactory" id="size_factory"/>
+                                    </property>
+                                    <property name="title">Size</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn" id="filesystem">
+                                    <property name="factory">
+                                      <object class="GtkSignalListItemFactory" id="filesystem_factory"/>
+                                    </property>
+                                    <property name="title">Filesystem</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn" id="label">
+                                    <property name="factory">
+                                      <object class="GtkSignalListItemFactory" id="label_factory"/>
+                                    </property>
+                                    <property name="title">Label</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkColumnViewColumn" id="type">
+                                    <property name="expand">True</property>
+                                    <property name="factory">
+                                      <object class="GtkSignalListItemFactory" id="type_factory"/>
+                                    </property>
+                                    <property name="title">Type</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="settings_box">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">50</property>
+                        <child>
+                          <object class="GtkListBox">
+                            <property name="css-classes">boxed-list</property>
+                            <child>
+                              <object class="AdwSwitchRow" id="save_image_switch">
+                                <property name="title">Save image</property>
+                                <property name="tooltip-text">Retain a copy of the disk image used for recovery. The image will be stored in the WORKING folder at your chosen destination.</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwSwitchRow" id="dupes_switch">
+                                <property name="title">Remove duplicates</property>
+                                <property name="tooltip-text">Identify and remove duplicate recovered files by comparing their content.</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwSwitchRow" id="corrupted_switch">
+                                <property name="title">Keep corrupted files</property>
+                                <property name="tooltip-text">By default, corrupted files are removed. Enable this to retain corrupted files in the 'corrupted' folder at your destination.</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwSwitchRow" id="log_switch">
+                                <property name="title">Save logs and reports</property>
+                                <property name="tooltip-text">Save detailed logs and reports for the recovery process, duplicate removal, and application output to your destination folder.</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="run_box">
+                    <property name="margin-top">45</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">50</property>
+                    <child>
+                      <object class="GtkListBox">
+                        <property name="css-classes">boxed-list</property>
+                        <child>
+                          <object class="AdwActionRow" id="choose_destination_actionrow">
+                            <property name="activatable">True</property>
+                            <property name="selectable">False</property>
+                            <property name="title">Choose destination</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="focus-on-click">False</property>
+                                <property name="halign">end</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="focus-on-click">False</property>
+                                    <property name="icon-name">go-next-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="valign">start</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="homogeneous">True</property>
+                                <child>
+                                  <object class="GtkButton" id="cancel_button">
+                                    <property name="halign">center</property>
+                                    <property name="label">Cancel</property>
+                                    <property name="visible">False</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="search_button">
+                                    <property name="action-name">win.search</property>
+                                    <property name="halign">center</property>
+                                    <property name="label">Search</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="output_label">
+                                <property name="css-classes">dim-label</property>
+                                <property name="justify">center</property>
+                                <property name="label">Ready to start recovery</property>
+                                <property name="margin-bottom">12</property>
+                                <property name="margin-top">12</property>
+                                <property name="wrap">true</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+            <property name="focus-on-click">False</property>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="menu-model">primary_menu</property>
+                <property name="primary">True</property>
+                <property name="tooltip-text" translatable="yes">Main Menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+    <property name="default-height">800</property>
+    <property name="default-width">800</property>
+    <property name="title" translatable="yes">Data Recovery</property>
+  </template>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="action">win.about</attribute>
+        <attribute name="label" translatable="yes">_About DataRecovery</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.quit</attribute>
+        <attribute name="label">_Quit</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

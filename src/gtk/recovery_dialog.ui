@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
+<!-- Created for DataRecovery -->
+<interface>
+  <!-- interface-name recovery_dialog.ui -->
+  <requires lib="Adw" version="1.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <template class="RecoveryProgressDialog" parent="AdwAlertDialog">
+    <property name="heading">Data Recovery in Progress</property>
+    <property name="close-response">cancel</property>
+    <child type="extra">
+      <object class="GtkBox" id="content_box">
+        <property name="margin-bottom">12</property>
+        <property name="margin-end">12</property>
+        <property name="margin-start">12</property>
+        <property name="margin-top">12</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">18</property>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel" id="status_label">
+                <property name="halign">start</property>
+                <property name="label">Initializing recovery...</property>
+                <property name="use-markup">True</property>
+                <property name="wrap">True</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkProgressBar" id="progress_bar">
+                <property name="show-text">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="margin-bottom">12</property>
+            <property name="margin-end">12</property>
+            <property name="margin-start">12</property>
+            <property name="margin-top">12</property>
+            <child>
+              <object class="GtkLabel" id="steps_label">
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="label"></property>
+                <property name="use-markup">True</property>
+                <property name="wrap">False</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <responses>
+      <response id="cancel" appearance="destructive">Cancel</response>
+    </responses>
+  </template>
+</interface>

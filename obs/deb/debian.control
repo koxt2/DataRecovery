@@ -1,0 +1,32 @@
+Source: datarecovery
+Section: utils
+Priority: optional
+Maintainer: koxt2 <koxt2@protonmail.com>
+Build-Depends: debhelper (>= 12),
+               meson (>= 1.0.0),
+               ninja-build,
+               libgtk-4-dev,
+               libadwaita-1-dev,
+               libglib2.0-dev,
+               desktop-file-utils
+Standards-Version: 4.5.0
+Homepage: https://github.com/koxt2/DataRecovery
+
+Package: datarecovery
+Architecture: all
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         python3,
+         python3-gi,
+         gir1.2-gtk-4.0,
+         gir1.2-adw-1,
+         gddrescue,
+         testdisk,
+         rdfind,
+         udisks2,
+         policykit-1
+Description: GTK4/Libadwaita application for data recovery
+ A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec.
+ Recovers all files (not just deleted ones) from storage devices or disk
+ images, organises them by file type, and optionally removes duplicates
+ using rdfind.
