@@ -29,9 +29,11 @@ Requires:       photorec
 Requires:       rdfind
 Requires:       udisks2
 Requires:       polkit
+Requires:       hicolor-icon-theme
+Requires:       dbus-1-common
 
 %description
-A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Recovers all files (not just deleted ones) from storage devices or disk images, organises them by file type, and optionally removes duplicates using rdfind.
+A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Recovers all files (not just deleted ones) from storage devices or disk images, organizes them by file type, and optionally removes duplicates using rdfind.
 
 %prep
 %autosetup
