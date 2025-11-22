@@ -6,6 +6,5 @@ __pycache__/
 *.pyc
 
 # Ignore help files
-help.txt
 workflow.txt
 

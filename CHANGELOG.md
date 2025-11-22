@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v0.1.2] - 2025-11-22
+
 ### Added
 - AppStream metadata
 

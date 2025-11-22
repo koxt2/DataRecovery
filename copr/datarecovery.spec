@@ -1,7 +1,7 @@
 # spec file for package datarecovery (Copr build)
 
 Name:           datarecovery
-Version:        0.1.1
+Version:        0.1.2
 Release:        1%{?dist}
 Summary:        GTK4/Libadwaita application for data recovery
 License:        GPL-2.0-or-later
@@ -60,7 +60,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
-* Fri Nov 22 2025 koxt2 <koxt2@protonmail.com> - 0.1.1-1
+* Sat Nov 22 2025 koxt2 <koxt2@protonmail.com> - 0.1.2
+- AppStream metadata
+
+* Sat Nov 22 2025 koxt2 <koxt2@protonmail.com> - 0.1.1-1
 - Updated application icon to use full app ID (com.github.koxt2.datarecovery)
 - About dialog now displays correct application icon
 
