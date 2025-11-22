@@ -10,6 +10,10 @@ desktop_file = configure_file(
 install_data('datarecovery.policy',
   install_dir: get_option('datadir') / 'polkit-1' / 'actions')
 
+# Install AppStream metadata
+install_data('com.github.koxt2.datarecovery.metainfo.xml',
+  install_dir: get_option('datadir') / 'metainfo')
+
 # Install pkexec helper script
 install_data('datarecovery-pkexec-helper',
   install_dir: get_option('bindir'),

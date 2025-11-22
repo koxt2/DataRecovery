@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.github.koxt2.datarecovery</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0-or-later</project_license>
+  <name>DataRecovery</name>
+  <summary>Data recovery using ddrescue and PhotoRec</summary>
+  
+  <description>
+    <p>
+      DataRecovery is a GTK4/Libadwaita application for recovering data from storage devices and disk images.
+      It creates forensic disk images using GNU ddrescue's 4-pass method, then recovers files using PhotoRec.
+    </p>
+    <p>
+      Key features:
+    </p>
+    <ul>
+      <li>Creates disk images using ddrescue with 4-pass recovery (fast copy, direct I/O retry, reverse retry, final scraping)</li>
+      <li>Recovers all files (not just deleted ones) using PhotoRec</li>
+      <li>Automatically organizes recovered files by file type</li>
+      <li>Optional duplicate file removal using rdfind</li>
+      <li>Mount detection prevents data corruption on active partitions</li>
+      <li>System partition protection prevents recovery from running system drives</li>
+      <li>Disk space validation before operations</li>
+    </ul>
+    <p>
+      Important: This application requires significant disk space as it creates complete disk images before file recovery.
+      Ideal for recovering data from failing drives or performing forensic analysis.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">datarecovery.desktop</launchable>
+  
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main window showing device selection and recovery options</caption>
+      <image>https://raw.githubusercontent.com/koxt2/DataRecovery/main/data/screenshots/screenshot_01.png</image>
+    </screenshot>
+  </screenshots>
+  
+  <url type="homepage">https://github.com/koxt2/DataRecovery</url>
+  <url type="bugtracker">https://github.com/koxt2/DataRecovery/issues</url>
+  <url type="vcs-browser">https://github.com/koxt2/DataRecovery</url>
+  
+  <developer id="com.github.koxt2">
+    <name>koxt2</name>
+  </developer>
+  
+  <categories>
+    <category>System</category>
+    <category>Utility</category>
+  </categories>
+  
+  <keywords>
+    <keyword>recovery</keyword>
+    <keyword>forensics</keyword>
+    <keyword>ddrescue</keyword>
+    <keyword>photorec</keyword>
+    <keyword>data</keyword>
+    <keyword>disk</keyword>
+    <keyword>imaging</keyword>
+  </keywords>
+  
+  <provides>
+    <binary>datarecovery</binary>
+  </provides>
+  
+  <releases>
+    <release version="0.1.1" date="2025-11-22">
+      <description>
+        <p>Minor update:</p>
+        <ul>
+          <li>Updated application icon to use full app ID (com.github.koxt2.datarecovery)</li>
+          <li>About dialog now displays correct application icon</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.1.0" date="2025-11-20">
+      <description>
+        <p>Initial release:</p>
+        <ul>
+          <li>GTK4/Libadwaita user interface</li>
+          <li>Device selection with UDisks2 integration</li>
+          <li>Disk imaging with GNU ddrescue (4-pass method)</li>
+          <li>File recovery using PhotoRec</li>
+          <li>Automatic file organization by extension</li>
+          <li>Duplicate file removal with rdfind</li>
+          <li>Mount detection and system partition protection</li>
+          <li>pkexec integration for privileged operations</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  
+  <content_rating type="oars-1.1" />
+  
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  
+  <recommends>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </recommends>
+</component>
