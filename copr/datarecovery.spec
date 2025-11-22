@@ -56,6 +56,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/applications/datarecovery.desktop
 %{_datadir}/dbus-1/services/com.github.koxt2.datarecovery.service
 %{_datadir}/icons/hicolor/*/apps/com.github.koxt2.datarecovery*.*
+%{_datadir}/metainfo/com.github.koxt2.datarecovery.metainfo.xml
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
