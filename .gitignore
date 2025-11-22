@@ -9,5 +9,3 @@ __pycache__/
 help.txt
 workflow.txt
 
-# OBS arch README (workflow documentation only)
-obs/arch/README.md

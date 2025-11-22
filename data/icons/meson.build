@@ -1,4 +1,4 @@
-application_id = 'datarecovery'
+application_id = 'com.github.koxt2.datarecovery'
 
 scalable_dir = 'hicolor' / 'scalable' / 'apps'
 install_data(

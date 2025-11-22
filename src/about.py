@@ -24,7 +24,7 @@ from .config import VERSION
 
 about_dialog = Adw.AboutDialog(
     application_name='Data Recovery',
-    application_icon='datarecovery',
+    application_icon='com.github.koxt2.datarecovery',
     website='https://github.com/koxt2/datarecovery',
     issue_url='https://github.com/koxt2/datarecovery/issues',
     developer_name='koxt2',

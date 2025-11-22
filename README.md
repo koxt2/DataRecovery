@@ -117,7 +117,9 @@ sudo meson install -C builddir
 
 ---
 
-## 🙏 Acknowledgments
+## 🙏 Credits
+
+**Application Icon** - Derived from icons in the Adwaita icon theme, licensed under LGPL-3.0-or-later / CC-BY-SA-3.0 (<a href="https://gitlab.gnome.org/GNOME/adwaita-icon-theme" target="_blank">link</a>)
 
 **GTK4/Libadwaita** - Modern Linux desktop integration (<a href="https://gnome.pages.gitlab.gnome.org/libadwaita/" target="_blank">link</a>)
 
@@ -127,7 +129,7 @@ sudo meson install -C builddir
 
 **PhotoRec/TestDisk** - File recovery capabilities (<a href="https://www.cgsecurity.org/wiki/PhotoRec" target="_blank">link</a>)
 
-**rdfind** - Used for duplicate file detection and removal (<a href="https://github.com/pauldreik/rdfind" target="_blank">link</a>)
+**rdfind** - Duplicate file detection and removal (<a href="https://github.com/pauldreik/rdfind" target="_blank">link</a>)
 
 ---
 
