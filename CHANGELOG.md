@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v0.1.1] - 2025-11-22
+
 ### Changed
 - Updated application icon to use full app ID (`com.github.koxt2.datarecovery`)
 - About dialog now displays correct application icon
