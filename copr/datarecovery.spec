@@ -20,7 +20,7 @@ BuildRequires:  desktop-file-utils
 Requires:       python3
 Requires:       python3-gobject
 Requires:       gtk4
-Requires:       libadwaita
+Requires:       typelib(Adw) = 1
 Requires:       ddrescue
 Requires:       testdisk
 Requires:       rdfind
@@ -60,14 +60,14 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
-* Sat Nov 22 2025 koxt2 <koxt2@protonmail.com> - 0.1.2
+* Sat Nov 22 2025 koxt2 <koxt2@protonmail.com> - 0.1.2-1
 - AppStream metadata
 
 * Sat Nov 22 2025 koxt2 <koxt2@protonmail.com> - 0.1.1-1
 - Updated application icon to use full app ID (com.github.koxt2.datarecovery)
 - About dialog now displays correct application icon
 
-* Wed Nov 20 2025 koxt2 <koxt2@protonmail.com> - 0.1.0-1
+* Thur 20 2025 koxt2 <koxt2@protonmail.com> - 0.1.0-1
 - Initial release of datarecovery application
 - GTK4/Libadwaita-based user interface for data recovery
 - Integration with ddrescue for disk imaging

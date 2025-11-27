@@ -68,7 +68,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 - Updated application icon to use full app ID (com.github.koxt2.datarecovery)
 - About dialog now displays correct application icon
 
-* Wed Nov 20 2025 koxt2 <koxt2@protonmail.com> - 0.1.0
+* Thur 20 2025 koxt2 <koxt2@protonmail.com> - 0.1.0
 - Initial release of datarecovery application
 - GTK4/Libadwaita-based user interface for data recovery
 - Integration with ddrescue for disk imaging

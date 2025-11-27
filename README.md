@@ -1,7 +1,5 @@
 # DataRecovery
 
-> **Alpha Release** - Feature complete but needs wider testing across different distributions. It's only tested on openSUSE Tumbleweed and Asahi Fedora 42
-
 <p align="center">
   <img src="data/screenshots/screenshot_01.png" width="600"/>
 </p>
@@ -92,7 +90,7 @@ sudo meson install -C builddir
 
 **openSUSE**:
 - openSUSE Tumbleweed, Leap 16  
-  [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery&package=datarecovery)
+  [Download](https://build.opensuse.org/package/show/security:forensics/datarecovery)
 
 **Fedora**:
 - Install from Copr:
