@@ -61,7 +61,7 @@ sudo dnf install git meson ninja-build gtk4-devel libadwaita-devel glib2-devel p
 <summary><b>Ubuntu/Mint/Debian</b></summary>
 
 ```bash
-sudo apt install git meson ninja-build libgtk-4-dev libadwaita-1-dev libglib2.0-dev python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 desktop-file-utils gddrescue testdisk rdfind udisks2 policykit-1
+sudo apt install git meson ninja-build libgtk-4-dev libadwaita-1-dev libglib2.0-dev python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 desktop-file-utils gddrescue testdisk rdfind udisks2 policykit-1 polkitd
 ```
 </details>
 
@@ -88,23 +88,47 @@ sudo meson install -C builddir
 
 ### Packages
 
-**openSUSE**:
-- openSUSE Tumbleweed, Leap 16  
-  [Download](https://build.opensuse.org/package/show/security:forensics/datarecovery)
+<details>
+<summary><b>openSUSE</b></summary>
 
-**Fedora**:
-- Install from Copr:
+- openSUSE Tumbleweed, Leap 15.6, Leap 16  
+  [Download/install from OBS](https://build.opensuse.org/package/show/security:forensics/datarecovery)
+</details>
+
+<details>
+<summary><b>Fedora</b></summary>
+
+- Fedora 42, Fedora 43
   ```bash
   sudo dnf copr enable koxt2/datarecovery
   sudo dnf install datarecovery
   ```
   [View on Copr](https://copr.fedorainfracloud.org/coprs/koxt2/datarecovery/)
+</details>
 
-**Ubuntu/Debian**:
-- Ubuntu 24.04, 25.04, Debian 12, 13  
-  [Download](https://software.opensuse.org//download.html?project=home%3Akoxt2%3Adatarecovery%3Adeb&package=datarecovery)
+<details>
+<summary><b>Debian</b></summary>
 
-**Arch Linux**:
+- Debian 12 (Bookworm), Debian 13 (Trixie)  
+  [Download/install from OBS](https://build.opensuse.org/package/show/home:koxt2:datarecovery:deb/datarecovery)
+</details>
+
+<details>
+<summary><b>Ubuntu/Linux Mint</b></summary>
+
+- Ubuntu 24.04 LTS (Noble), 25.10 (Questing)
+- Linux Mint 22.x (based on Ubuntu 24.04)
+  ```bash
+  sudo add-apt-repository ppa:koxt2/datarecovery
+  sudo apt update
+  sudo apt install datarecovery
+  ```
+  [View on Launchpad](https://launchpad.net/~koxt2/+archive/ubuntu/datarecovery)
+</details>
+
+<details>
+<summary><b>Arch Linux</b></summary>
+
 - Install from AUR:
   ```bash
   yay -S datarecovery
@@ -112,6 +136,7 @@ sudo meson install -C builddir
   paru -S datarecovery
   ```
   [View on AUR](https://aur.archlinux.org/packages/datarecovery)
+</details>
 
 ---
 
