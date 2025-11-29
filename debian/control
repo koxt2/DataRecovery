@@ -24,7 +24,7 @@ Depends: ${misc:Depends},
          testdisk,
          rdfind,
          udisks2,
-         policykit-1
+         policykit-1 | polkitd
 Description: GTK4/Libadwaita application for data recovery
  A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec.
  Recovers all files (not just deleted ones) from storage devices or disk

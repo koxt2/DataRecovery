@@ -1,23 +1,17 @@
-datarecovery (0.1.2-1~plucky1) plucky; urgency=medium
-
-  * Build for Ubuntu 25.10 Plucky
-
- -- koxt2 <koxt2@protonmail.com>  Sat, 29 Nov 2025 12:43:30 +0000
-
-datarecovery (0.1.2-1) noble; urgency=medium
+datarecovery (0.1.2-1) UNRELEASED; urgency=medium
 
   * AppStream metadata
 
  -- koxt2 <koxt2@protonmail.com>  Sat, 22 Nov 2025 12:00:00 +0000
 
-datarecovery (0.1.1-1) noble; urgency=medium
+datarecovery (0.1.1-1) UNRELEASED; urgency=medium
 
   * Updated application icon to use full app ID (com.github.koxt2.datarecovery)
   * About dialog now displays correct application icon
 
  -- koxt2 <koxt2@protonmail.com>  Sat, 22 Nov 2025 12:00:00 +0000
 
-datarecovery (0.1.0-1) noble; urgency=medium
+datarecovery (0.1.0-1) UNRELEASED; urgency=medium
 
   * Initial release of datarecovery application
   * GTK4/Libadwaita-based user interface for data recovery
