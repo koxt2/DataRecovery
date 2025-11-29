@@ -1,3 +1,9 @@
+datarecovery (0.1.2-1~plucky1) plucky; urgency=medium
+
+  * Build for Ubuntu 25.10 Plucky
+
+ -- koxt2 <koxt2@protonmail.com>  Sat, 29 Nov 2025 12:43:30 +0000
+
 datarecovery (0.1.2-1) noble; urgency=medium
 
   * AppStream metadata
