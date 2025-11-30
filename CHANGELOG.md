@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+### Added
+- File type selection dialog with more categories
+- Expandable category rows with individual switches
+- Category-level switches to enable/disable all file types in a category at once
+- Search functionality to filter file types
+- Select All / Unselect All buttons for quick selection changes
+- Smart PhotoRec command generation (exclude mode when >50% selected, include mode when <50%) - needs testing
+
+### Changed
+- Reorganized file types
+- Moved FILE_TYPES configuration to config.py
+
+### Fixed
+- Empty `no_extension` directory no longer created when no files without extensions exist
+- PhotoRec `report.xml` file excluded from being moved to destination (content duplicated in photorec logs)
+
 ## [v0.1.2] - 2025-11-22
 
 ### Added

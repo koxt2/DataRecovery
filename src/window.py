@@ -194,4 +194,4 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
     def on_file_types_row_clicked(self, row):
         if self.file_types_dialog is None:
             self.file_types_dialog = FileTypesDialog(parent_window=self)
-        self.file_types_dialog.present()
+        self.file_types_dialog.present(self)

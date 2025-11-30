@@ -5,8 +5,11 @@
   <requires lib="Adw" version="1.0"/>
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.7"/>
-  <template class="FileTypesDialog" parent="AdwWindow">
-    <property name="content">
+  <template class="FileTypesDialog" parent="AdwDialog">
+    <property name="content-width">600</property>
+    <property name="content-height">700</property>
+    <property name="title">File Types</property>
+    <property name="child">
       <object class="AdwToolbarView">
         <property name="content">
           <object class="GtkBox">
@@ -62,9 +65,5 @@
         </child>
       </object>
     </property>
-    <property name="default-height">700</property>
-    <property name="default-width">600</property>
-    <property name="modal">True</property>
-    <property name="title">File Types</property>
   </template>
 </interface>

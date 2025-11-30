@@ -22,7 +22,7 @@ from gi.repository import Adw, Gtk
 from .config import FILE_TYPES
 
 @Gtk.Template(resource_path='/datarecovery/gtk/file_types.ui')
-class FileTypesDialog(Adw.Window):
+class FileTypesDialog(Adw.Dialog):
     __gtype_name__ = 'FileTypesDialog'
     
     container_box = Gtk.Template.Child()
@@ -32,7 +32,6 @@ class FileTypesDialog(Adw.Window):
     
     def __init__(self, parent_window, **kwargs):
         super().__init__(**kwargs)
-        self.set_transient_for(parent_window)
         self.category_boxes = {}
         self.file_type_rows = {}
         self.category_switches = {}
@@ -40,11 +39,6 @@ class FileTypesDialog(Adw.Window):
         self.search_entry.connect("search-changed", self.on_search_changed)
         self.select_all_button.connect("clicked", self.on_select_all)
         self.unselect_all_button.connect("clicked", self.on_unselect_all)
-        self.connect("close-request", self.on_close_request)
-    
-    def on_close_request(self, window):
-        self.hide()
-        return True
     
     def populate_file_types(self):
         for category, file_types in FILE_TYPES.items():

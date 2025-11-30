@@ -36,6 +36,14 @@
       <caption>Main window showing device selection and recovery options</caption>
       <image>https://raw.githubusercontent.com/koxt2/DataRecovery/main/data/screenshots/screenshot_01.png</image>
     </screenshot>
+    <screenshot>
+      <caption>File types selection dialog with categorized filters</caption>
+      <image>https://raw.githubusercontent.com/koxt2/DataRecovery/main/data/screenshots/screenshot_02.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Recovery progress showing imaging and file recovery</caption>
+      <image>https://raw.githubusercontent.com/koxt2/DataRecovery/main/data/screenshots/screenshot_03.png</image>
+    </screenshot>
   </screenshots>
   
   <url type="homepage">https://github.com/koxt2/DataRecovery</url>
