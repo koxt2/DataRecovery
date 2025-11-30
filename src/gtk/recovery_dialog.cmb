@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<!-- Created with Cambalache 0.96.1 -->
-<cambalache-project version="0.96.0" target_tk="gtk-4.0">
-  <ui template-class="RecoveryContentBox" filename="recovery_dialog.ui" sha256="95f24dd223b86a00dd4ff85e38fa12ba8e67b2bbd8428eeeb6441a8131ac69fa"/>
-</cambalache-project>
