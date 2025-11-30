@@ -44,13 +44,11 @@
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
                 <child>
-                  <object class="GtkBox" id="container_box">
+                  <object class="AdwPreferencesGroup" id="container_box">
                     <property name="margin-bottom">20</property>
                     <property name="margin-end">20</property>
                     <property name="margin-start">20</property>
                     <property name="margin-top">10</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">10</property>
                   </object>
                 </child>
               </object>

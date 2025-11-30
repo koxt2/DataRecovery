@@ -19,6 +19,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 from gi.repository import Adw, Gtk
+from .config import FILE_TYPES
 
 @Gtk.Template(resource_path='/datarecovery/gtk/file_types.ui')
 class FileTypesDialog(Adw.Window):
@@ -29,85 +30,12 @@ class FileTypesDialog(Adw.Window):
     select_all_button = Gtk.Template.Child()
     unselect_all_button = Gtk.Template.Child()
     
-    FILE_TYPES = {
-        "Archive": [
-            "7z", "a", "ace", "apk", "arj", "bkf", "bz2", "cab", "dar", "deb", 
-            "dump", "ghx", "gz", "lzh", "lzo", "par2", "rar", "rpm", "stu", 
-            "tar", "tar.gz", "vbm", "wim", "xar", "xz", "zip"
-        ],
-        "Multimedia": [
-            "3ds", "3dm", "3g2", "3gp", "abr", "acb", "ado", "aep", "afdesign",
-            "aif", "albm", "all", "als", "ani", "ape", "ari", "arw", "asf",
-            "asl", "au", "avi", "axp", "binvox", "bdm", "bld", "blend", "bmp",
-            "bpg", "bvr", "c4d", "caf", "cam", "camrec", "CATDrawing", "cda",
-            "cdd", "cdl", "cdr", "cdt", "celtx", "che", "comicdoc", "cpi",
-            "cpr", "cr2", "cr3", "crw", "csh", "ctg", "cue", "dad", "db",
-            "dcm", "dcr", "djv", "dng", "dp", "dpx", "ds2", "dsc", "dss",
-            "ds_store", "dta", "dv", "dvi", "dvr", "dwg", "emf", "epub",
-            "ers", "exs", "fcp", "fh10", "fh5", "flac", "fla", "flp", "flv",
-            "gi", "gif", "gp4", "gp5", "gpx", "gsm", "heic", "icc", "icns",
-            "ico", "idf", "idx", "iff", "ind", "ifo", "indd", "info", "ipt",
-            "iso", "it", "itu", "ora", "jng", "jpg", "kra", "logic", "m2t",
-            "m2ts", "m3u", "m4p", "max", "mb", "mcf", "mfa", "mhbd", "mid",
-            "mkv", "mlv", "mng", "mov", "mp", "mp3", "mp4", "mpg", "mpl",
-            "mpo", "mrw", "mus", "mws", "nef", "oci", "ogg", "ogm", "ogv",
-            "orf", "pbm", "pct", "pcx", "psb", "pef", "pgm", "png", "pnm",
-            "ppm", "prproj", "psd", "psf", "psp", "ptb", "pts", "pvp", "qcp",
-            "qkt", "qxd", "qxp", "r3d", "raf", "ram", "ra", "raw", "rdc",
-            "rm", "rns", "rpp", "rw2", "rx2", "ses", "shn", "sib", "sit",
-            "skd", "sketch", "smil", "spss", "sr2", "svg", "swc", "swf",
-            "tg", "tif", "TiVo", "tod", "tpl", "ts", "vdj", "wav", "wdp",
-            "webm", "webp", "wee", "wmf", "wnk", "wpb", "wpl", "wtv", "wv",
-            "x3f", "x3i", "xcf", "xd", "xm", "xmp", "xrns", "xv", "zcode"
-        ],
-        "Office": [
-            "accdb", "ai", "apr", "csv", "cwk", "doc", "docx", "et", "fb2",
-            "fods", "fp7", "fp12", "gnucash", "kmy", "lyx", "mdb", "njx",
-            "odg", "odp", "ods", "odt", "one", "pages", "pap", "ppt", "pptx",
-            "pub", "qbb", "qbw", "qpw", "rtf", "sda", "sdc", "sdd", "sdw",
-            "slk", "sav", "snt", "sxc", "sxd", "sxi", "sxw", "tex", "txt",
-            "vsd", "vsdx", "wpd", "wps", "xlr", "xls", "xlsx", "wdb", "wk4",
-            "wks"
-        ],
-        "Others": [
-            "1cd", "ab", "adr", "agn", "ahn", "amb", "amd", "amr", "amt",
-            "apa", "apple", "asm", "asp", "atd", "att", "axx", "bac", "bai",
-            "bam", "bat", "bgz", "bim", "c", "chm", "class", "cls", "cm",
-            "compress", "cow", "cp_", "csi", "d2s", "dat", "db", "dbf",
-            "dbn", "dbx", "dc", "ddf", "dex", "dgn", "dif", "dim", "diskimage",
-            "dll", "dmp", "drw", "dsa", "dst", "dxf", "e01", "ecr", "eCryptfs",
-            "edb", "elf", "emb", "emka", "emlx", "eps", "ess", "evt", "evtx",
-            "exe", "fbf", "fbk", "fcs", "fdb", "fds", "f", "fh1", "fit",
-            "fits", "fm", "fob", "fos", "fp5", "freeway", "frm", "fst", "fs",
-            "fwd", "gam", "gcs", "gct", "gho", "gm6", "gm81", "gmd", "gmk",
-            "gp2", "gpg", "gsb", "h", "hdf", "hdr", "hds", "hm", "hr9",
-            "html.gz", "html", "http", "ibd", "ics", "imb", "img", "imm",
-            "inf", "ini", "jad", "jar", "jks", "jnb", "jp2", "json", "jsonlz4",
-            "jsp", "kdb", "kdbx", "key", "kmz", "ldf", "ldif", "lit", "lnk",
-            "lso", "luks", "lwo", "lxo", "ly", "mat", "mcd", "mdf", "mdl",
-            "mem", "mfg", "mig", "mk5", "mmap", "mny", "mobi", "msa", "msf",
-            "msg", "mxf", "MYI", "myo", "nd2", "nds", "nes", "nk2", "notebook",
-            "nsf", "p65", "paf", "pcap", "pcb", "pcp", "pdb", "pdf", "pds",
-            "pf", "pfx", "pgp", "php", "pli", "plist", "pl", "plt", "pm",
-            "ppk", "prc", "prd", "priv", "prt", "psmodel", "ps", "pst", "ptf",
-            "ptx", "pub", "pyc", "py", "pzf", "pzh", "qbb", "qbmb", "qbw",
-            "qdf-backup", "qdf", "qgs", "rb", "RData", "reg", "res", "rfp",
-            "rlv", "rsa", "rvt", "save", "schematic", "sgcta", "sh3d", "sh",
-            "skp", "sla", "sldprt", "sld", "snag", "sp3", "sparseimage",
-            "spe", "spf", "sqlite", "sql", "sqm", "steuer2014", "steuer2015",
-            "stl", "stp", "studio", "tax", "tcw", "tib", "ticket.bin", "torrent",
-            "tph", "ttd", "ttf", "tz", "url", "v2i", "vault", "vb", "vcf",
-            "vdi", "veg", "vfb", "vib", "wallet", "vmdk", "vmg", "wab", "wim",
-            "win", "wld", "woff", "x4a", "x4g", "x4p", "x4s", "xfi", "xml.gz",
-            "xml", "xoj", "xpi", "xpt", "xsv", "z2d", "zpr"
-        ]
-    }
-    
     def __init__(self, parent_window, **kwargs):
         super().__init__(**kwargs)
         self.set_transient_for(parent_window)
         self.category_boxes = {}
         self.file_type_rows = {}
+        self.category_switches = {}
         self.populate_file_types()
         self.search_entry.connect("search-changed", self.on_search_changed)
         self.select_all_button.connect("clicked", self.on_select_all)
@@ -119,31 +47,40 @@ class FileTypesDialog(Adw.Window):
         return True
     
     def populate_file_types(self):
-        for category, file_types in self.FILE_TYPES.items():
-            category_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-            category_box.set_margin_bottom(20)
+        for category, file_types in FILE_TYPES.items():
+            expander_row = Adw.ExpanderRow()
+            expander_row.set_title(category)
+            expander_row.set_expanded(False)
             
-            category_listbox = Gtk.ListBox()
-            category_listbox.set_css_classes(["boxed-list"])
-            category_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+            category_switch = Gtk.Switch()
+            category_switch.set_valign(Gtk.Align.CENTER)
+            category_switch.set_active(True)
+            expander_row.add_suffix(category_switch)
             
-            category_label = Adw.ActionRow()
-            category_label.set_title(f"<b>{category}</b>")
-            category_label.set_title_lines(1)
-            category_listbox.append(category_label)
-            
+            listbox = Gtk.ListBox()
+            listbox.set_css_classes(["boxed-list"])
+            listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+
             self.file_type_rows[category] = []
-            
+
             for file_type in file_types:
                 switch_row = Adw.SwitchRow()
                 switch_row.set_title(file_type)
                 switch_row.set_active(True)
-                category_listbox.append(switch_row)
+                listbox.append(switch_row)
                 self.file_type_rows[category].append((switch_row, file_type))
+
+            category_switch.connect("state-set", self.on_category_switch_toggled, category)
             
-            category_box.append(category_listbox)
-            self.container_box.append(category_box)
-            self.category_boxes[category] = category_box
+            expander_row.add_row(listbox)
+            self.container_box.add(expander_row)
+            self.category_boxes[category] = expander_row
+            self.category_switches[category] = category_switch
+    
+    def on_category_switch_toggled(self, switch, state, category):
+        for switch_row, file_type in self.file_type_rows[category]:
+            switch_row.set_active(state)
+        return False
     
     def on_search_changed(self, entry):
         search_text = entry.get_text().lower()
@@ -171,11 +108,15 @@ class FileTypesDialog(Adw.Window):
                 category_box.set_visible(has_visible_items)
     
     def on_select_all(self, button):
+        for category_switch in self.category_switches.values():
+            category_switch.set_active(True)
         for category_rows in self.file_type_rows.values():
             for switch_row, file_type in category_rows:
                 switch_row.set_active(True)
     
     def on_unselect_all(self, button):
+        for category_switch in self.category_switches.values():
+            category_switch.set_active(False)
         for category_rows in self.file_type_rows.values():
             for switch_row, file_type in category_rows:
                 switch_row.set_active(False)
