@@ -61,7 +61,7 @@ sudo dnf install git meson ninja-build gtk4-devel libadwaita-devel glib2-devel p
 <summary><b>Ubuntu/Mint/Debian</b></summary>
 
 ```bash
-sudo apt install git meson ninja-build libgtk-4-dev libadwaita-1-dev libglib2.0-dev python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 desktop-file-utils gddrescue testdisk rdfind udisks2 policykit-1 polkitd
+sudo apt install git meson ninja-build libgtk-4-dev libadwaita-1-dev libglib2.0-dev python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 desktop-file-utils gddrescue testdisk rdfind udisks2 polkitd
 ```
 </details>
 
@@ -84,6 +84,12 @@ meson setup builddir
 meson compile -C builddir
 sudo mkdir -p /usr/local/share/glib-2.0/schemas
 sudo meson install -C builddir
+```
+
+**Uninstall:**    
+
+```bash
+sudo ninja -C builddir uninstall
 ```
 
 ### Packages

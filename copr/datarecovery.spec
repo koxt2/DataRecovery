@@ -1,7 +1,7 @@
 # spec file for package datarecovery (Copr build)
 
 Name:           datarecovery
-Version:        0.1.2
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        GTK4/Libadwaita application for data recovery
 License:        GPL-2.0-or-later
@@ -60,6 +60,18 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
+* Sun Nov 30 2025 koxt2 <koxt2@protonmail.com> - 0.2.0
+- File type selection dialog with more categories
+- Expandable category rows with individual switches
+- Category-level switches to enable/disable all file types in a category at once
+- Search functionality to filter file types
+- Select All / Unselect All buttons for quick selection changes
+- Smart PhotoRec command generation (exclude mode when >50% selected, include mode when <50%) - needs testing
+- Reorganized file types
+- Moved FILE_TYPES configuration to config.py
+- Empty `no_extension` directory no longer created when no files without extensions exist
+- PhotoRec `report.xml` file excluded from being moved to destination (content duplicated in photorec logs)
+
 * Sat Nov 22 2025 koxt2 <koxt2@protonmail.com> - 0.1.2-1
 - AppStream metadata
 

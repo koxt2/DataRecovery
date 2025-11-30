@@ -1,3 +1,18 @@
+datarecovery (0.2.0-1) UNRELEASED; urgency=medium
+
+  * File type selection dialog with more categories
+  * Expandable category rows with individual switches
+  * Category-level switches to enable/disable all file types in a category at once
+  * Search functionality to filter file types
+  * Select All / Unselect All buttons for quick selection changes
+  * Smart PhotoRec command generation (exclude mode when >50% selected, include mode when <50%) - needs testing
+  * Reorganized file types
+  * Moved FILE_TYPES configuration to config.py
+  * Empty `no_extension` directory no longer created when no files without extensions exist
+  * PhotoRec `report.xml` file excluded from being moved to destination (content duplicated in photorec logs)
+
+ -- koxt2 <koxt2@protonmail.com>  Sun, 30 Nov 2025 12:00:00 +0000
+
 datarecovery (0.1.2-1) UNRELEASED; urgency=medium
 
   * AppStream metadata

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v0.2.0] - 2025-11-30
+
 ### Added
 - File type selection dialog with more categories
 - Expandable category rows with individual switches
