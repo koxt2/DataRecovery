@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
+<interface>
+  <!-- interface-name file_types.ui -->
+  <requires lib="Adw" version="1.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.7"/>
+  <template class="FileTypesDialog" parent="AdwWindow">
+    <property name="content">
+      <object class="AdwToolbarView">
+        <property name="content">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkSearchEntry" id="search_entry">
+                <property name="margin-bottom">10</property>
+                <property name="margin-end">20</property>
+                <property name="margin-start">20</property>
+                <property name="margin-top">20</property>
+                <property name="placeholder-text">Search file types...</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="margin-start">20</property>
+                <property name="margin-end">20</property>
+                <property name="margin-bottom">10</property>
+                <property name="spacing">10</property>
+                <child>
+                  <object class="GtkButton" id="select_all_button">
+                    <property name="label">Select All</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="unselect_all_button">
+                    <property name="label">Unselect All</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkBox" id="container_box">
+                    <property name="margin-bottom">20</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-start">20</property>
+                    <property name="margin-top">10</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">10</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-end-title-buttons">True</property>
+          </object>
+        </child>
+      </object>
+    </property>
+    <property name="default-height">700</property>
+    <property name="default-width">600</property>
+    <property name="modal">True</property>
+    <property name="title">File Types</property>
+  </template>
+</interface>

@@ -139,13 +139,11 @@ class RecoveryWorkflow:
                     if self.device_imager.cancelled:
                         self.logger.info("Disk imaging cancelled by user")
                         GLib.idle_add(self.recovery_dialog.update_step_status, 'imaging', 'error')
-                        # Clean up incomplete image files
                         self.file_operations.cleanup_working_directory(self.working_dir)
                         return
                     self.logger.error("Disk imaging failed")
                     GLib.idle_add(self.recovery_dialog.update_step_status, 'imaging', 'error')
                     GLib.idle_add(self.recovery_dialog.update_status, "Recovery failed: Disk imaging unsuccessful")
-                    # Clean up incomplete image files
                     self.file_operations.cleanup_working_directory(self.working_dir)
                     return
                 
@@ -161,7 +159,8 @@ class RecoveryWorkflow:
             # For devices, use the working_dir where images were created
             recovery_source = device_path if is_image_file else self.working_dir
             recovery_success = self.photorec_recovery.setup_recovery(
-                recovery_source, recovery_dir, keep_corrupted, enable_logs
+                recovery_source, recovery_dir, keep_corrupted, enable_logs, 
+                fileopt_command=user_settings.get('fileopt_command')
             )
             
             if not recovery_success:
@@ -222,7 +221,6 @@ class RecoveryWorkflow:
             GLib.idle_add(show_error_dialog)
     
     def _format_bytes(self, bytes_value):
-        """Format bytes into human-readable string"""
         for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if bytes_value < 1024.0:
                 return f"{bytes_value:.1f} {unit}"

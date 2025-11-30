@@ -7,3 +7,8 @@ __pycache__/
 
 # Ignore help files
 workflow.md
+
+# Ignore generated GTK UI files
+src/gtk/recovery_dialog.cmb
+src/gtk/window.cmb
+src/gtk/file_types.cmb

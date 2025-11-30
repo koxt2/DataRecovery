@@ -110,6 +110,11 @@ class FileOperations:
         
         for filename in files:
             if filename.endswith(LOG_FILE_EXTENSION):
+                # Skip report.xml as it duplicates photorec_*.log content
+                if filename == "report.xml":
+                    self.logger.debug("Skipping report.xml (content duplicated in photorec log)")
+                    continue
+                
                 source_path = os.path.join(working_dir, filename)
                 dest_path = os.path.join(app_data_dir, filename)
                 
@@ -165,6 +170,9 @@ class FileOperations:
         
         for root, dirs, files in os.walk(recovery_dir):
             for file in files:
+                # Skip report.xml (PhotoRec report file)
+                if file == "report.xml":
+                    continue
                 if '.' in file and not file.startswith('.'):
                     ext = os.path.splitext(file)[1][1:].lower()
                     if ext:
@@ -202,7 +210,7 @@ class FileOperations:
         
         try:
             subprocess.run(
-                ['find', source_dir, '-name', f'*.{extension}', '-type', 'f', '-exec', 'mv', '{}', f'{ext_dir}/', ';'],
+                ['find', source_dir, '-name', f'*.{extension}', '!', '-name', 'report.xml', '-type', 'f', '-exec', 'mv', '{}', f'{ext_dir}/', ';'],
                 check=True, capture_output=True, text=True, timeout=300
             )
             self.logger.info(f"Organized .{extension} files")
@@ -229,5 +237,14 @@ class FileOperations:
                     os.rename(src_path, dest_path)
                     files_moved += 1
         
-        self.logger.info(f"Organized files without extension: {files_moved} moved")
+        # Remove directory if empty
+        if files_moved == 0:
+            try:
+                os.rmdir(no_ext_dir)
+                self.logger.debug("Removed empty no_extension directory")
+            except:
+                pass
+        else:
+            self.logger.info(f"Organized files without extension: {files_moved} moved")
+        
         return True

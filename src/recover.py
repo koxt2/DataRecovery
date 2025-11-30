@@ -39,15 +39,16 @@ class DeviceRecovery:
         self.current_process = None
         self.cancelled = False
 
-    def setup_recovery(self, source, recovery_dir, keep_corrupted=False, enable_logs=False):
+    def setup_recovery(self, source, recovery_dir, keep_corrupted=False, enable_logs=False, fileopt_command=None):
         self.logger.info("Starting PhotoRec recovery")
         self.cancelled = False
+        
+        self.fileopt_command = fileopt_command or 'fileopt,everything,enable'
         
         # Check if source is a file or directory
         if os.path.isfile(source):
             # It's a single image file - scan it directly
             image_file = source
-            # Set working_dir to the parent directory of recovery_dir for log placement
             self.working_dir = os.path.dirname(recovery_dir)
             self.logger.info(f"Scanning single image file: {source}")
         else:
@@ -108,6 +109,8 @@ class DeviceRecovery:
         if keep_corrupted:
             options += f",{PHOTOREC_OPTION_KEEP_CORRUPTED}"
 
+        options += f",{self.fileopt_command}"
+        
         options += f",{PHOTOREC_OPTION_SEARCH}"
         
         cmd = ["photorec"]

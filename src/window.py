@@ -28,6 +28,7 @@ from .block_devices import DeviceMonitor
 from .mounted_check import MountedPartitionChecker
 from .recovery_dialog import RecoveryProgressDialog
 from .recovery_workflow import RecoveryWorkflow
+from .file_types_dialog import FileTypesDialog
 from . import settings
 
 @Gtk.Template(resource_path='/datarecovery/gtk/window.ui')
@@ -51,6 +52,7 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
     log_switch                      = Gtk.Template.Child()
     corrupted_switch                = Gtk.Template.Child()
     dupes_switch                    = Gtk.Template.Child()
+    file_types_row                  = Gtk.Template.Child()
     
     choose_destination_actionrow    = Gtk.Template.Child()
     
@@ -68,6 +70,7 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
         self.device_columnview = None
         self.mount_checker = None
         self.recovery_dialog = None
+        self.file_types_dialog = None
         
         self.create_action('about', self.on_about_action)
     
@@ -83,6 +86,7 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
         self.select_device_dropdown.connect("notify::selected", self._on_device_selected)
         self.choose_destination_actionrow.connect("activated", lambda row: self._choose_destination())
         self.search_button.connect("clicked", lambda button: self._on_search())
+        self.file_types_row.connect("activated", self.on_file_types_row_clicked)
         
         self.search_button.set_sensitive(False)
     
@@ -186,3 +190,8 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
     
     def on_about_action(self, *args):
         about_dialog.present(self) 
+    
+    def on_file_types_row_clicked(self, row):
+        if self.file_types_dialog is None:
+            self.file_types_dialog = FileTypesDialog(parent_window=self)
+        self.file_types_dialog.present()
