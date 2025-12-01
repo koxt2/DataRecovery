@@ -20,7 +20,7 @@ BuildRequires:  desktop-file-utils
 Requires:       python3
 Requires:       python3-gobject
 Requires:       gtk4
-Requires:       typelib(Adw) = 1
+Requires:       libadwaita
 Requires:       ddrescue
 Requires:       testdisk
 Requires:       rdfind
@@ -60,7 +60,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
-* Sun Nov 30 2025 koxt2 <koxt2@protonmail.com> - 0.2.0
+* Sun Dec 01 2025 koxt2 <koxt2@protonmail.com> - 0.2.0-2
+- Fix libadwaita dependency for aarch64 (ARM/M1 Mac) compatibility
+
+* Sun Nov 30 2025 koxt2 <koxt2@protonmail.com> - 0.2.0-1
 - File type selection dialog with more categories
 - Expandable category rows with individual switches
 - Category-level switches to enable/disable all file types in a category at once
