@@ -60,7 +60,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
-* Sun Dec 01 2025 koxt2 <koxt2@protonmail.com> - 0.2.0-2
+* Sun Dec 01 2025 koxt2 <koxt2@protonmail.com> - 0.2.1-1
 - Fix libadwaita dependency for aarch64 (ARM/M1 Mac) compatibility
 
 * Sun Nov 30 2025 koxt2 <koxt2@protonmail.com> - 0.2.0-1
