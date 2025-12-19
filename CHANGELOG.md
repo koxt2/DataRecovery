@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### Added
+- Custom signature dialog for defining PhotoRec file signatures
+- Support for adding, viewing, and deleting custom file signatures
+- Custom signatures integrated into file types dialog under "System & Other" category
+- Application now uses `~/.photorec.sig` for storing custom file signatures
+- Application now writes to `~/.photorec.cfg` for PhotoRec file type configuration
+
+### Changed
+- Reorganised file types dialog
+- Moved FILE_TYPES and FILE_TYPE_GROUPS to dedicated file_types.py module for better organization
+- Custom signatures now appear in "System & Other" group in file types dialog
+
+### Fixed
+- File type search now uses PhotoRec family keys instead of extensions for accurate matching (e.g., searching for "py" now correctly finds files recovered under the "txt" family)
+
 ## [v0.2.0] - 2025-11-30
 
 ### Added

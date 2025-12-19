@@ -1,7 +1,7 @@
 # spec file for package datarecovery (Copr build)
 
 Name:           datarecovery
-Version:        0.2.1
+Version:        0.3.0
 Release:        1%{?dist}
 Summary:        GTK4/Libadwaita application for data recovery
 License:        GPL-2.0-or-later
@@ -60,6 +60,16 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
+* Fri Dec 19 2025 koxt2 <koxt2@protonmail.com> - 0.3.0
+- Custom signature dialog for defining PhotoRec file signatures
+- Support for adding, viewing, and deleting custom file signatures
+- Custom signatures integrated into file types dialog under "System & Other" category
+- Application now uses ~/.photorec.sig for storing custom file signatures
+- Application now writes to ~/.photorec.cfg for PhotoRec file type configuration
+- Reorganised file types dialog
+- Moved FILE_TYPES and FILE_TYPE_GROUPS to dedicated file_types.py module for better organization
+- File type search now uses PhotoRec family keys instead of extensions for accurate matching
+
 * Sun Dec 01 2025 koxt2 <koxt2@protonmail.com> - 0.2.1-1
 - Fix libadwaita dependency for Fedora
 

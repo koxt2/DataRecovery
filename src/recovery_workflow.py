@@ -159,8 +159,7 @@ class RecoveryWorkflow:
             # For devices, use the working_dir where images were created
             recovery_source = device_path if is_image_file else self.working_dir
             recovery_success = self.photorec_recovery.setup_recovery(
-                recovery_source, recovery_dir, keep_corrupted, enable_logs, 
-                fileopt_command=user_settings.get('fileopt_command')
+                recovery_source, recovery_dir, keep_corrupted, enable_logs
             )
             
             if not recovery_success:
@@ -182,10 +181,11 @@ class RecoveryWorkflow:
                 self.duplicate_remover.remove_duplicates(recovery_dir)
                 GLib.idle_add(self.recovery_dialog.update_step_status, 'duplicates', 'complete')
             
-            # Step 4: Organize recovered files by type
+            # Step 4: Organize recovered files by type (only selected extensions)
             GLib.idle_add(self.recovery_dialog.update_step_status, 'organize', 'active')
             GLib.idle_add(self.recovery_dialog.update_status, "Organizing files by type")
-            self.file_operations.organize_recovered_files(recovery_dir, destination_path)
+            selected_extensions = user_settings.get('selected_extensions', [])
+            self.file_operations.organize_recovered_files(recovery_dir, destination_path, selected_extensions)
             GLib.idle_add(self.recovery_dialog.update_step_status, 'organize', 'complete')
             
             # Step 5: Move images if requested

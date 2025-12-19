@@ -50,10 +50,12 @@ datarecovery_sources = [
   'mounted_check.py',
   'recovery_dialog.py',
   'file_operations.py',
+  'file_types.py',
   'file_types_dialog.py',
   'recover.py',
   'duplicates.py',
   'recovery_workflow.py',
+  'custom_signature_dialog.py',
 ]
 
 install_data(datarecovery_sources, install_dir: moduledir)

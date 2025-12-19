@@ -33,14 +33,13 @@ def get_settings(window):
         'save_image': window.save_image_switch.get_active(),
         'save_logs': window.log_switch.get_active(),
         'keep_corrupted': window.corrupted_switch.get_active(),
-        'remove_duplicates': window.dupes_switch.get_active()
+        'remove_duplicates': window.dupes_switch.get_active(),
+        'selected_extensions': []
     }
     
-    # Get file type filter command if dialog exists
+    # Write file type selections to ~/.photorec.cfg and get selected extensions
     if window.file_types_dialog is not None:
-        settings['fileopt_command'] = window.file_types_dialog.get_photorec_fileopt_commands()
-    else:
-        # Default to all file types enabled
-        settings['fileopt_command'] = 'fileopt,everything,enable'
+        window.file_types_dialog.write_photorec_cfg()
+        settings['selected_extensions'] = window.file_types_dialog.get_selected_file_types()
     
     return settings

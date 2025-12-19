@@ -5,6 +5,12 @@ builddir/
 __pycache__/
 *.pyc
 
+# Packaging directories (maintained separately)
+aur/
+obs/
+debian/
+copr/
+
 # Ignore help files
 workflow.md
 
@@ -12,3 +18,6 @@ workflow.md
 src/gtk/recovery_dialog.cmb
 src/gtk/window.cmb
 src/gtk/file_types.cmb
+src/custom_signature_dialog.cmb
+
+docs/

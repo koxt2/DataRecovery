@@ -39,11 +39,9 @@ class DeviceRecovery:
         self.current_process = None
         self.cancelled = False
 
-    def setup_recovery(self, source, recovery_dir, keep_corrupted=False, enable_logs=False, fileopt_command=None):
+    def setup_recovery(self, source, recovery_dir, keep_corrupted=False, enable_logs=False):
         self.logger.info("Starting PhotoRec recovery")
         self.cancelled = False
-        
-        self.fileopt_command = fileopt_command or 'fileopt,everything,enable'
         
         # Check if source is a file or directory
         if os.path.isfile(source):
@@ -108,8 +106,6 @@ class DeviceRecovery:
         options = PHOTOREC_OPTIONS_BASE
         if keep_corrupted:
             options += f",{PHOTOREC_OPTION_KEEP_CORRUPTED}"
-
-        options += f",{self.fileopt_command}"
         
         options += f",{PHOTOREC_OPTION_SEARCH}"
         

@@ -147,7 +147,6 @@ class DeviceImager:
         return success
     
     def _format_bytes(self, bytes_value):
-        """Format bytes into human-readable string"""
         for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if bytes_value < 1024.0:
                 return f"{bytes_value:.1f} {unit}"

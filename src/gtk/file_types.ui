@@ -40,6 +40,19 @@
                     <property name="label">Unselect All</property>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="hexpand">true</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="custom_signatures_button">
+                    <property name="label">Custom Signatures</property>
+                    <style>
+                      <class name="pill"/>
+                    </style>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
@@ -47,7 +60,9 @@
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
                 <child>
-                  <object class="AdwPreferencesGroup" id="container_box">
+                  <object class="GtkBox" id="container_box">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">24</property>
                     <property name="margin-bottom">20</property>
                     <property name="margin-end">20</property>
                     <property name="margin-start">20</property>

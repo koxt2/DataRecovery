@@ -35,7 +35,7 @@ class FileOperations:
         
         if not os.path.exists(working_dir):
             self.logger.warning(f"Working directory does not exist: {working_dir}")
-            return True  # Nothing to clean up
+            return True 
         
         main_log = os.path.join(working_dir, DATARECOVERY_LOG)
         
@@ -134,7 +134,7 @@ class FileOperations:
         
         return True
 
-    def organize_recovered_files(self, recovery_dir, destination_dir):
+    def organize_recovered_files(self, recovery_dir, destination_dir, selected_extensions=None):
         self.logger.info("Organizing recovered files by type")
         
         if self.recovery_dialog:
@@ -148,7 +148,21 @@ class FileOperations:
             self.logger.warning("No files found to organize")
             return False
         
-        self.logger.info(f"Found {len(extensions)} different file types")
+        self.logger.info(f"Found {len(extensions)} different file types in recovery")
+        
+        # Filter extensions to only include user-selected ones
+        if selected_extensions:
+            # Normalize to lowercase for comparison
+            selected_lower = {ext.lower() for ext in selected_extensions}
+            filtered_extensions = [ext for ext in extensions if ext.lower() in selected_lower]
+            skipped = len(extensions) - len(filtered_extensions)
+            if skipped > 0:
+                self.logger.info(f"Filtering to {len(filtered_extensions)} selected file types (skipping {skipped} unwanted types)")
+            extensions = filtered_extensions
+        
+        if not extensions:
+            self.logger.warning("No files matching selected types found")
+            return False
         
         failed_extensions = []
         for ext in extensions:

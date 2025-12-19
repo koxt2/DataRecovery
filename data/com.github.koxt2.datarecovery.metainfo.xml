@@ -74,6 +74,37 @@
   </provides>
   
   <releases>
+    <release version="0.3.0" date="2025-12-19">
+      <description>
+        <p>Custom signatures and improvements:</p>
+        <ul>
+          <li>Custom signature dialog for defining PhotoRec file signatures</li>
+          <li>Support for adding, viewing, and deleting custom file signatures</li>
+          <li>Reorganised file types dialog with custom signatures in "System &amp; Other" category</li>
+          <li>Moved FILE_TYPES configuration to dedicated module for better organization</li>
+          <li>Fixed file type search to use PhotoRec family keys for accurate matching</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.2.0" date="2025-11-30">
+      <description>
+        <p>Major UI improvements:</p>
+        <ul>
+          <li>File type selection dialog with more categories</li>
+          <li>Expandable category rows with individual switches</li>
+          <li>Category-level switches to enable/disable all file types at once</li>
+          <li>Search functionality to filter file types</li>
+          <li>Select All / Unselect All buttons</li>
+          <li>Smart PhotoRec command generation (exclude/include modes)</li>
+          <li>Fixed empty directory creation for files without extensions</li>
+        </ul>
+      </description>
+    </release>
+    <release version="0.1.2" date="2025-11-22">
+      <description>
+        <p>AppStream metadata added</p>
+      </description>
+    </release>
     <release version="0.1.1" date="2025-11-22">
       <description>
         <p>Minor update:</p>

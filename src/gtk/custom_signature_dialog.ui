@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.3 -->
+<interface>
+  <!-- interface-name custom_signature_dialog.ui -->
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <template class="CustomSignatureDialog" parent="AdwDialog">
+    <property name="content-height">650</property>
+    <property name="content-width">700</property>
+    <property name="title" translatable="yes">Custom File Signatures</property>
+    <child>
+      <object class="AdwToolbarView">
+        <property name="content">
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar-policy">never</property>
+            <property name="vexpand">true</property>
+            <property name="vscrollbar-policy">automatic</property>
+            <child>
+              <object class="GtkBox">
+                <property name="margin-bottom">24</property>
+                <property name="margin-end">24</property>
+                <property name="margin-start">24</property>
+                <property name="margin-top">24</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">24</property>
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <property name="description" translatable="yes">Create a custom file signature by providing a sample file</property>
+                    <property name="title" translatable="yes">Add New Signature</property>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="subtitle" translatable="yes">Select a file to extract signature from</property>
+                        <property name="title" translatable="yes">Sample File</property>
+                        <child>
+                          <object class="GtkButton" id="file_chooser_button">
+                            <property name="label" translatable="yes">Choose File</property>
+                            <property name="valign">center</property>
+                            <style>
+                              <class name="pill"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="selected_file_row">
+                        <property name="title" translatable="yes">Selected File</property>
+                        <property name="visible">false</property>
+                        <child>
+                          <object class="GtkLabel" id="selected_file_label">
+                            <property name="label"/>
+                            <property name="valign">center</property>
+                            <style>
+                              <class name="dim-label"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwEntryRow" id="extension_entry">
+                        <property name="text"/>
+                        <property name="title" translatable="yes">File Extension</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="subtitle" translatable="yes">Number of bytes to use from file header</property>
+                        <property name="title" translatable="yes">Signature Length (bytes)</property>
+                        <child>
+                          <object class="GtkSpinButton" id="byte_length_spin">
+                            <property name="adjustment">
+                              <object class="GtkAdjustment">
+                                <property name="lower">4</property>
+                                <property name="page-increment">16</property>
+                                <property name="step-increment">4</property>
+                                <property name="upper">128</property>
+                                <property name="value">16</property>
+                              </object>
+                            </property>
+                            <property name="valign">center</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwExpanderRow" id="signature_preview_row">
+                        <property name="show-enable-switch">false</property>
+                        <property name="title" translatable="yes">Signature Preview</property>
+                        <property name="visible">false</property>
+                        <child>
+                          <object class="GtkListBox">
+                            <property name="selection-mode">none</property>
+                            <child>
+                              <object class="AdwActionRow" id="hex_signature_row">
+                                <property name="subtitle"/>
+                                <property name="subtitle-selectable">true</property>
+                                <property name="title" translatable="yes">Hex Signature</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwActionRow" id="ascii_preview_row_display">
+                                <property name="subtitle"/>
+                                <property name="subtitle-selectable">true</property>
+                                <property name="title" translatable="yes">ASCII Preview</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">end</property>
+                        <property name="margin-top">12</property>
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkButton" id="add_signature_button">
+                            <property name="label" translatable="yes">Add Signature</property>
+                            <property name="sensitive">false</property>
+                            <style>
+                              <class name="suggested-action"/>
+                              <class name="pill"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <property name="description" translatable="yes">Manage your custom file signatures</property>
+                    <property name="title" translatable="yes">Existing Signatures</property>
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <property name="hscrollbar-policy">never</property>
+                        <property name="max-content-height">200</property>
+                        <property name="min-content-height">200</property>
+                        <property name="vexpand">false</property>
+                        <property name="vscrollbar-policy">automatic</property>
+                        <child>
+                          <object class="GtkListBox" id="signatures_list">
+                            <property name="selection-mode">none</property>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-title">true</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

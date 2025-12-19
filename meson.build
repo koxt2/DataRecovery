@@ -1,5 +1,5 @@
 project('datarecovery',
-          version: 'v0.2.0',
+          version: 'v0.3.0',
     meson_version: '>= 1.0.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
 )
