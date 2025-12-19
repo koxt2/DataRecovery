@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [v0.3.0] - 2025-12-19
+
 ### Added
 - Custom signature dialog for defining PhotoRec file signatures
 - Support for adding, viewing, and deleting custom file signatures
