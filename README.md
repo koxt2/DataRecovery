@@ -25,6 +25,8 @@ A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Rec
 - **Save Logs**
 - **Remove Duplicates**
 - **Keep Corrupted Files**
+- **Selective File Type Recovery**
+- **Custom Signature Support**
 
 ### ddrescue 4-Pass Details
 

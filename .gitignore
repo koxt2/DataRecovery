@@ -6,10 +6,10 @@ __pycache__/
 *.pyc
 
 # Packaging directories (maintained separately)
-aur/
-obs/
-debian/
-copr/
+#aur/
+#obs/
+#debian/
+#copr/
 
 # Ignore help files
 workflow.md
