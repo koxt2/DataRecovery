@@ -74,6 +74,17 @@
   </provides>
   
   <releases>
+    <release version="0.4.0" date="2025-12-23">
+      <description>
+        <p>SMART monitoring and bug fixes:</p>
+        <ul>
+          <li>SMART data monitoring with health indicators in device columnview</li>
+          <li>Detailed SMART attributes viewer showing all available drive metrics</li>
+          <li>Fixed bug where lsblk returning multiple lines for device size caused parsing error</li>
+          <li>Code refactoring for improved maintainability</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.3.0" date="2025-12-19">
       <description>
         <p>Custom signatures and improvements:</p>

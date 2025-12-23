@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.3 -->
+<interface>
+  <!-- interface-name smart_dialog.ui -->
+  <requires lib="Adw" version="1.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.6"/>
+  <requires lib="gio" version="2.44"/>
+  <template class="SmartDialog" parent="AdwDialog">
+    <property name="content-height">600</property>
+    <property name="content-width">900</property>
+    <child>
+      <object class="AdwToolbarView" id="toolbar_view">
+        <property name="content">
+          <object class="GtkBox">
+            <property name="margin-bottom">20</property>
+            <property name="margin-end">20</property>
+            <property name="margin-start">20</property>
+            <property name="margin-top">20</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkBox" id="label_box">
+                <property name="homogeneous">True</property>
+                <property name="orientation">horizontal</property>
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Key Metrics</property>
+                        <style>
+                          <class name="heading"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="halign">end</property>
+                    <child>
+                      <object class="GtkLabel" id="status_label">
+                        <property name="label">Status:   </property>
+                        <style>
+                          <class name="heading"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="status_value">
+                        <style>
+                          <class name="title-2"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="key_metrics_box">
+                <property name="orientation">vertical</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="AdwPreferencesGroup" id="metrics_group"/>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="smart_box">
+                <property name="margin-top">10</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">10</property>
+                <child>
+                  <object class="GtkLabel" id="attributes_label">
+                    <property name="halign">start</property>
+                    <property name="label">SMART Attributes</property>
+                    <style>
+                      <class name="heading"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <child>
+                      <object class="GtkColumnView" id="columnview">
+                        <property name="model">
+                          <object class="GtkNoSelection">
+                            <property name="model">
+                              <object class="GListStore" id="attributes_liststore"/>
+                            </property>
+                          </object>
+                        </property>
+                        <property name="vexpand">true</property>
+                        <child>
+                          <object class="GtkColumnViewColumn" id="id_column">
+                            <property name="factory">
+                              <object class="GtkSignalListItemFactory" id="id_factory"/>
+                            </property>
+                            <property name="fixed-width">60</property>
+                            <property name="title">ID</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkColumnViewColumn" id="name_column">
+                            <property name="expand">true</property>
+                            <property name="factory">
+                              <object class="GtkSignalListItemFactory" id="name_factory"/>
+                            </property>
+                            <property name="title">Attribute Name</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkColumnViewColumn" id="value_column">
+                            <property name="factory">
+                              <object class="GtkSignalListItemFactory" id="value_factory"/>
+                            </property>
+                            <property name="fixed-width">70</property>
+                            <property name="title">Value</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkColumnViewColumn" id="worst_column">
+                            <property name="factory">
+                              <object class="GtkSignalListItemFactory" id="worst_factory"/>
+                            </property>
+                            <property name="fixed-width">70</property>
+                            <property name="title">Worst</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkColumnViewColumn" id="thresh_column">
+                            <property name="factory">
+                              <object class="GtkSignalListItemFactory" id="thresh_factory"/>
+                            </property>
+                            <property name="fixed-width">90</property>
+                            <property name="title">Threshold</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkColumnViewColumn" id="raw_column">
+                            <property name="factory">
+                              <object class="GtkSignalListItemFactory" id="raw_factory"/>
+                            </property>
+                            <property name="fixed-width">150</property>
+                            <property name="title">Raw Value</property>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="data-table"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar" id="header_bar"/>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

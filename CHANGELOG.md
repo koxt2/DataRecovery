@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [v0.4.0] - 2025-12-23
+### Added
+- SMART data monitoring with health indicators in device columnview
+- Detailed SMART attributes viewer showing all available drive metrics
+
+### Fixed
+- Fixed bug where `lsblk` returning multiple lines for device size caused parsing error
+- File renamed: `initialiser.py` → `initializer.py` for consistent American spelling
+- Window method renamed: `initialize()` → `setup_window()` for clarity
+- Removed unused imports across multiple files
+
 ## [v0.3.0] - 2025-12-19
 
 ### Added

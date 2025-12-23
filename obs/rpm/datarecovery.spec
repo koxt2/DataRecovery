@@ -61,6 +61,14 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
+* Tue Dec 23 2025 koxt2 <koxt2@protonmail.com> - 0.4.0
+- SMART data monitoring with health indicators in device columnview
+- Detailed SMART attributes viewer showing all available drive metrics
+- Fixed bug where lsblk returning multiple lines for device size caused parsing error
+- File renamed: initialiser.py → initializer.py for consistent American spelling
+- Window method renamed: initialize() → setup_window() for clarity
+- Removed unused imports across multiple files
+
 * Fri Dec 19 2025 koxt2 <koxt2@protonmail.com> - 0.3.0
 - Custom signature dialog for defining PhotoRec file signatures
 - Support for adding, viewing, and deleting custom file signatures

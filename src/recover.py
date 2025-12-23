@@ -22,7 +22,6 @@ import os
 import subprocess
 import logging
 import shutil
-import signal
 from gi.repository import GLib
 from .config import (
     IMAGE_FILE_EXTENSION, 

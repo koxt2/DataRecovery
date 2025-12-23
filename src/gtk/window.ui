@@ -90,6 +90,14 @@
                                   </object>
                                 </child>
                                 <child>
+                                  <object class="GtkColumnViewColumn" id="health">
+                                    <property name="factory">
+                                      <object class="GtkSignalListItemFactory" id="health_factory"/>
+                                    </property>
+                                    <property name="title">Health</property>
+                                  </object>
+                                </child>
+                                <child>
                                   <object class="GtkColumnViewColumn" id="size">
                                     <property name="factory">
                                       <object class="GtkSignalListItemFactory" id="size_factory"/>

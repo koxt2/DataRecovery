@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
 import logging
 from pathlib import Path
 from gi.repository import Gtk, Adw, GLib
@@ -25,7 +24,6 @@ from gi.repository import Gtk, Adw, GLib
 class CustomSignatureDialog(Adw.Dialog):
     __gtype_name__ = 'CustomSignatureDialog'
 
-    # UI Elements
     file_chooser_button = Gtk.Template.Child()
     selected_file_row = Gtk.Template.Child()
     selected_file_label = Gtk.Template.Child()

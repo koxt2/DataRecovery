@@ -37,6 +37,7 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
     
     mounted_factory                 = Gtk.Template.Child()
     device_path_factory             = Gtk.Template.Child()
+    health_factory                  = Gtk.Template.Child()
     size_factory                    = Gtk.Template.Child()
     filesystem_factory              = Gtk.Template.Child()
     label_factory                   = Gtk.Template.Child()
@@ -74,7 +75,7 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
         
         self.create_action('about', self.on_about_action)
     
-    def initialize(self, working_dir):
+    def setup_window(self, working_dir):
         self.working_dir = working_dir
         
         self.device_dropdown = DeviceDropdown(self)

@@ -48,3 +48,13 @@ REQUIRED_TOOLS = ['ddrescue', 'photorec', 'rdfind', 'udisksctl']
 PHOTOREC_OPTIONS_BASE = "options"
 PHOTOREC_OPTION_KEEP_CORRUPTED = "keep_corrupted_file"
 PHOTOREC_OPTION_SEARCH = "search"
+
+CRITICAL_ATTRIBUTES = {
+    5: ('Reallocated_Sector_Ct', 10),      # threshold: warn if > 10
+    10: ('Spin_Retry_Count', 5),           # threshold: warn if > 5
+    187: ('Reported_Uncorrect', 0),        # threshold: warn if > 0
+    188: ('Command_Timeout', 100),         # threshold: warn if > 100
+    196: ('Reallocated_Event_Count', 10),  # threshold: warn if > 10
+    197: ('Current_Pending_Sector', 0),    # threshold: warn if > 0
+    198: ('Offline_Uncorrectable', 0),     # threshold: warn if > 0
+}

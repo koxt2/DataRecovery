@@ -1,14 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.96.1 -->
+<!-- Created with Cambalache 0.96.3 -->
 <interface>
   <!-- interface-name file_types.ui -->
   <requires lib="Adw" version="1.0"/>
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.7"/>
   <template class="FileTypesDialog" parent="AdwDialog">
-    <property name="content-width">600</property>
-    <property name="content-height">700</property>
-    <property name="title">File Types</property>
     <property name="child">
       <object class="AdwToolbarView">
         <property name="content">
@@ -25,10 +22,11 @@
             </child>
             <child>
               <object class="GtkBox">
-                <property name="orientation">horizontal</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
                 <property name="margin-bottom">10</property>
+                <property name="margin-end">20</property>
+                <property name="margin-start">20</property>
+                <property name="margin-top">10</property>
+                <property name="orientation">horizontal</property>
                 <property name="spacing">10</property>
                 <child>
                   <object class="GtkButton" id="select_all_button">
@@ -57,16 +55,21 @@
             </child>
             <child>
               <object class="GtkScrolledWindow">
+                <property name="css-classes">card</property>
                 <property name="hexpand">True</property>
+                <property name="margin-bottom">20</property>
+                <property name="margin-end">20</property>
+                <property name="margin-start">20</property>
+                <property name="margin-top">10</property>
                 <property name="vexpand">True</property>
                 <child>
                   <object class="GtkBox" id="container_box">
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">24</property>
                     <property name="margin-bottom">20</property>
                     <property name="margin-end">20</property>
                     <property name="margin-start">20</property>
                     <property name="margin-top">10</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">24</property>
                   </object>
                 </child>
               </object>
@@ -80,5 +83,8 @@
         </child>
       </object>
     </property>
+    <property name="content-height">700</property>
+    <property name="content-width">600</property>
+    <property name="title">File Types</property>
   </template>
 </interface>

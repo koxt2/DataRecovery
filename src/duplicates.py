@@ -21,7 +21,6 @@
 import subprocess
 import logging
 import os
-import shutil
 from gi.repository import GLib
 from .config import DUPLICATES_LOG
 

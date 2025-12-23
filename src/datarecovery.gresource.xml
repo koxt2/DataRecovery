@@ -5,5 +5,6 @@
     <file preprocess="xml-stripblanks">gtk/recovery_dialog.ui</file>
     <file preprocess="xml-stripblanks">gtk/file_types.ui</file>
     <file preprocess="xml-stripblanks">gtk/custom_signature_dialog.ui</file>
+    <file preprocess="xml-stripblanks">gtk/smart_dialog.ui</file>
   </gresource>
 </gresources>

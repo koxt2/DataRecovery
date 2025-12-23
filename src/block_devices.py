@@ -140,6 +140,9 @@ def get_device_size(device_path):
             check=True
         )
         size_str = result.stdout.strip()
+        # If multiple lines (device + partitions), take only the first line (the device itself)
+        if '\n' in size_str:
+            size_str = size_str.split('\n')[0].strip()
         return int(size_str)
     except (subprocess.CalledProcessError, ValueError) as e:
         logger.error(f"Failed to get device size for {device_path}: {e}")

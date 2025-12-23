@@ -28,7 +28,7 @@ from gi.repository import Adw, GLib
 from .log import setup_datarecovery_logging
 from .config import REQUIRED_TOOLS, WORKING_DIR_NAME
 
-class Initialiser:
+class Initializer:
 
     def __init__(self, window=None):
         self.window = window

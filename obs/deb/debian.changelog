@@ -1,3 +1,14 @@
+datarecovery (0.4.0-1) UNRELEASED; urgency=medium
+
+  * SMART data monitoring with health indicators in device columnview
+  * Detailed SMART attributes viewer showing all available drive metrics
+  * Fixed bug where lsblk returning multiple lines for device size caused parsing error
+  * File renamed: initialiser.py → initializer.py for consistent American spelling
+  * Window method renamed: initialize() → setup_window() for clarity
+  * Removed unused imports across multiple files
+
+ -- koxt2 <koxt2@protonmail.com>  Tue, 23 Dec 2025 21:00:00 +0000
+ 
 datarecovery (0.3.0-1) UNRELEASED; urgency=medium
 
   * Custom signature dialog for defining PhotoRec file signatures

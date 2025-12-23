@@ -23,11 +23,13 @@ from gi.repository import GObject, Gtk
 
 from .partition_guids import PARTITION_TYPE_GUIDS
 from . import settings
+from . import smart_data
+from .smart_dialog import SmartDialog
 
 class PartitionRow(GObject.Object):
     __gtype_name__ = 'PartitionRow'
 
-    def __init__(self, mounted = False, path='', size='', filesystem='', label='', type='', mount_path=None):
+    def __init__(self, mounted = False, path='', size='', filesystem='', label='', type='', mount_path=None, smart_status='unavailable', is_whole_device=False):
         super().__init__()
         self._mounted = mounted
         self._path = path
@@ -36,6 +38,8 @@ class PartitionRow(GObject.Object):
         self._label = label
         self._type = type
         self._mount_path = mount_path
+        self._smart_status = smart_status
+        self._is_whole_device = is_whole_device
 
     @GObject.Property(type=bool, default=False)
     def mounted(self):
@@ -64,6 +68,14 @@ class PartitionRow(GObject.Object):
     @GObject.Property(type=str)
     def mount_path(self):
         return self._mount_path or ''
+    
+    @GObject.Property(type=str)
+    def smart_status(self):
+        return self._smart_status or 'unavailable'
+    
+    @GObject.Property(type=bool, default=False)
+    def is_whole_device(self):
+        return self._is_whole_device
 
 class DeviceColumnView:
     def __init__(self, window, device_dropdown):
@@ -86,6 +98,8 @@ class DeviceColumnView:
         self.window.label_factory.connect("bind", self._label_factory_bind('label'))
         self.window.type_factory.connect("setup", self._label_factory_setup)
         self.window.type_factory.connect("bind", self._label_factory_bind('type'))
+        self.window.health_factory.connect("setup", self._health_factory_setup)
+        self.window.health_factory.connect("bind", self._health_factory_bind)
     
     def _label_factory_setup(self, factory, item):
         label = Gtk.Label()
@@ -115,6 +129,58 @@ class DeviceColumnView:
             check.set_active(bool(getattr(row, prop, False)))
             self._set_mount_tooltip(check, row)
         return bind_func
+    
+    def _health_factory_setup(self, factory, item):
+        button = Gtk.Button()
+        button.set_has_frame(False)
+        button.add_css_class("flat")
+        
+        icon = Gtk.Image()
+        icon.set_halign(Gtk.Align.CENTER)
+        
+        button.set_child(icon)
+        item.set_child(button)
+    
+    def _health_factory_bind(self, factory, item):
+        button = item.get_child()
+        icon = button.get_child()
+        
+        row = item.get_item()
+        status = row.smart_status
+        is_device = row.is_whole_device
+        
+        # Only show SMART data for whole devices, not partitions
+        if not is_device:
+            icon.set_from_icon_name("")
+            button.set_sensitive(False)
+            button.set_tooltip_text(None)
+            return
+        
+        if status == 'healthy':
+            icon.set_from_icon_name("checkbox-checked-symbolic")
+            button.set_tooltip_text("Click for detailed SMART data")
+        elif status == 'warning':
+            icon.set_from_icon_name("dialog-warning-symbolic")
+            button.set_tooltip_text("Click for detailed SMART data")
+        elif status == 'failing':
+            icon.set_from_icon_name("dialog-error-symbolic")
+            button.set_tooltip_text("Click for detailed SMART data")
+        else:  # unavailable
+            icon.set_from_icon_name("dialog-question-symbolic")
+            button.set_tooltip_text("SMART data not available")
+        
+        # Disconnect the button so the same handler is not connected multiple times
+        if hasattr(button, '_health_handler_id'):
+            button.disconnect(button._health_handler_id)
+        
+        handler_id = button.connect('clicked', self._on_health_clicked, row.path)
+        button._health_handler_id = handler_id
+        
+        button.set_sensitive(status != 'unavailable')
+    
+    def _on_health_clicked(self, button, device_path):
+        dialog = SmartDialog(self.window, device_path)
+        dialog.present(self.window)
    
     def _format_size(self, size_bytes):
         if not size_bytes:
@@ -149,6 +215,9 @@ class DeviceColumnView:
             if p['path'].startswith(device['path']) and p['path'] != device['path']
         ]
         
+        # Get SMART status for the device
+        smart_status, _ = smart_data.get_smart_status(device['path'])
+        
         # Always show the whole device as a row
         size_str = self._format_size(device.get('size', 0))
         part_type_name = 'WHOLE DEVICE'
@@ -159,7 +228,9 @@ class DeviceColumnView:
             filesystem=device.get('id_type', ''),
             label=device.get('label', ''),
             type=part_type_name,
-            mount_path=device.get('mount_path')
+            mount_path=device.get('mount_path'),
+            smart_status=smart_status,
+            is_whole_device=True
         )
         self.window.columnview_liststore.append(row)
         

@@ -25,7 +25,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Adw, Gio
 
 from .window import DatarecoveryWindow
-from .initialiser import Initialiser
+from .initializer import Initializer
 
 class DatarecoveryApplication(Adw.Application):
     def __init__(self):
@@ -40,10 +40,10 @@ class DatarecoveryApplication(Adw.Application):
             win = DatarecoveryWindow(application=self)
         win.present()
 
-        initialiser = Initialiser(window=win)
+        initializer = Initializer(window=win)
         
-        if initialiser.tools_available:
-            win.initialize(working_dir=initialiser.working_dir)
+        if initializer.tools_available:
+            win.setup_window(working_dir=initializer.working_dir)
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

@@ -39,7 +39,7 @@ datarecovery_sources = [
   'main.py',
   'window.py',
   'log.py',
-  'initialiser.py',
+  'initializer.py',
   'partition_guids.py',
   'block_devices.py',
   'device_dropdown.py',
@@ -56,6 +56,9 @@ datarecovery_sources = [
   'duplicates.py',
   'recovery_workflow.py',
   'custom_signature_dialog.py',
+  'smart_data.py',
+  'smart_dialog.py',
+  'smart_dialog_columnview.py',
 ]
 
 install_data(datarecovery_sources, install_dir: moduledir)
