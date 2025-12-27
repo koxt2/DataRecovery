@@ -18,7 +18,7 @@ workflow.md
 src/gtk/recovery_dialog.cmb
 src/gtk/window.cmb
 src/gtk/file_types.cmb
-src/custom_signature_dialog.cmb
-src/smart_dialog.cmb
+src/gtk/custom_signature_dialog.cmb
+src/gtk/smart_dialog.cmb
 
 docs/

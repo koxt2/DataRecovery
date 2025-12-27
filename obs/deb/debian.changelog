@@ -1,3 +1,9 @@
+datarecovery (0.4.1-1) UNRELEASED; urgency=medium
+
+  * Updated screenshots
+
+ -- koxt2 <koxt2@protonmail.com>  Sat, 27 Dec 2025 21:00:00 +0000
+
 datarecovery (0.4.0-1) UNRELEASED; urgency=medium
 
   * SMART data monitoring with health indicators in device columnview

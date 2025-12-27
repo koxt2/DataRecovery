@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [v0.4.1] - 2025-12-27
+### Added
+- Updated screenshots
+
 ## [v0.4.0] - 2025-12-23
 ### Added
 - SMART data monitoring with health indicators in device columnview

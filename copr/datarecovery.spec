@@ -1,7 +1,7 @@
 # spec file for package datarecovery (Copr build)
 
 Name:           datarecovery
-Version:        0.4.0
+Version:        0.4.1
 Release:        1%{?dist}
 Summary:        GTK4/Libadwaita application for data recovery
 License:        GPL-2.0-or-later
@@ -60,6 +60,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
+* Sat Dec 27 2025 koxt2 <koxt2@protonmail.com> - 0.4.1
+- Updated screenshots
+
 * Tue Dec 23 2025 koxt2 <koxt2@protonmail.com> - 0.4.0
 - SMART data monitoring with health indicators in device columnview
 - Detailed SMART attributes viewer showing all available drive metrics
