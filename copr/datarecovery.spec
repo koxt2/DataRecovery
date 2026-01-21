@@ -81,7 +81,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 - Moved FILE_TYPES and FILE_TYPE_GROUPS to dedicated file_types.py module for better organization
 - File type search now uses PhotoRec family keys instead of extensions for accurate matching
 
-* Sun Dec 01 2025 koxt2 <koxt2@protonmail.com> - 0.2.1-1
+* Mon Dec 01 2025 koxt2 <koxt2@protonmail.com> - 0.2.1-1
 - Fix libadwaita dependency for Fedora
 
 * Sun Nov 30 2025 koxt2 <koxt2@protonmail.com> - 0.2.0-1
