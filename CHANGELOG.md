@@ -12,6 +12,7 @@
 - Application no longer re-initialises when brought back to the foreground (subsequent activations now just re-present the existing window)
 - `MountedPartitionChecker` no longer takes an unused `device_dropdown` parameter
 - `PartitionRow.type` property renamed to `part_type` to avoid shadowing the Python built-in
+- README update
 
 ### Fixed
 - Duplicate `/d` flag in PhotoRec command that would confuse file output location

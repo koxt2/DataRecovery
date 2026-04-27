@@ -22,7 +22,6 @@ A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Rec
 ### User Options
 
 - **Save Images**
-- **Save Logs**
 - **Remove Duplicates**
 - **Keep Corrupted Files**
 - **Selective File Type Recovery**
@@ -39,6 +38,87 @@ A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Rec
 ---
 
 ## 📦 Installation
+
+### Packages
+
+<details>
+<summary><b>openSUSE</b></summary>
+
+- Tumbleweed  
+  ```bash
+  sudo zypper addrepo https://download.opensuse.org/repositories/security:forensics/openSUSE_Tumbleweed/security:forensics.repo
+  sudo zypper refresh
+  sudo zypper install datarecovery
+  ```
+- Leap 16
+  ```bash
+  sudo zypper addrepo https://download.opensuse.org/repositories/security:forensics/16.0/security:forensics.repo
+  sudo zypper refresh
+  sudo zypper install datarecovery
+  ```
+- Leap 15.6
+  ```bash
+  sudo zypper addrepo https://download.opensuse.org/repositories/security:forensics/15.6/security:forensics.repo
+  sudo zypper refresh
+  sudo zypper install datarecovery
+  ```
+  [View on OBS](https://build.opensuse.org/package/show/security:forensics/datarecovery)
+</details>
+
+<details>
+<summary><b>Fedora</b></summary>
+
+- Fedora 42, Fedora 43
+  ```bash
+  sudo dnf copr enable koxt2/datarecovery
+  sudo dnf install datarecovery
+  ```
+  [View on Copr](https://copr.fedorainfracloud.org/coprs/koxt2/datarecovery/)
+</details>
+
+<details>
+<summary><b>Debian</b></summary>
+
+- Debian 13 (Trixie)
+  ```bash
+  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/datarecovery:/deb/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:datarecovery:deb.list
+  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:datarecovery:deb/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_datarecovery_deb.gpg > /dev/null
+  sudo apt update
+  sudo apt install datarecovery
+  ```  
+- Debian 12 (Bookworm)
+  ```bash
+  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/datarecovery:/deb/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:datarecovery:deb.list
+  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:datarecovery:deb/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_datarecovery_deb.gpg > /dev/null
+  sudo apt update
+  sudo apt install datarecovery
+  ``` 
+  [View on OBS](https://build.opensuse.org/package/show/home:koxt2:datarecovery:deb/datarecovery)
+</details>
+
+<details>
+<summary><b>Ubuntu</b></summary>
+
+- Ubuntu 24.04 LTS (Noble), 25.10 (Questing)
+  ```bash
+  sudo add-apt-repository ppa:koxt2/datarecovery
+  sudo apt update
+  sudo apt install datarecovery
+  ```
+  [View on Launchpad](https://launchpad.net/~koxt2/+archive/ubuntu/datarecovery)
+</details>
+
+<details>
+<summary><b>Arch Linux</b></summary>
+
+- Install from AUR:
+  ```bash
+  yay -S datarecovery
+  # or
+  paru -S datarecovery
+  ```
+  [View on AUR](https://aur.archlinux.org/packages/datarecovery)
+</details>
 
 ### From Source (meson)
 
@@ -95,57 +175,7 @@ sudo meson install -C builddir
 sudo ninja -C builddir uninstall
 ```
 
-### Packages
 
-<details>
-<summary><b>openSUSE</b></summary>
-
-- openSUSE Tumbleweed, Leap 15.6, Leap 16  
-  [Download/install from OBS](https://build.opensuse.org/package/show/security:forensics/datarecovery)
-</details>
-
-<details>
-<summary><b>Fedora</b></summary>
-
-- Fedora 42, Fedora 43
-  ```bash
-  sudo dnf copr enable koxt2/datarecovery
-  sudo dnf install datarecovery
-  ```
-  [View on Copr](https://copr.fedorainfracloud.org/coprs/koxt2/datarecovery/)
-</details>
-
-<details>
-<summary><b>Debian</b></summary>
-
-- Debian 12 (Bookworm), Debian 13 (Trixie)  
-  [Download/install from OBS](https://build.opensuse.org/package/show/home:koxt2:datarecovery:deb/datarecovery)
-</details>
-
-<details>
-<summary><b>Ubuntu/Linux Mint</b></summary>
-
-- Ubuntu 24.04 LTS (Noble), 25.10 (Questing)
-- Linux Mint 22.x (based on Ubuntu 24.04)
-  ```bash
-  sudo add-apt-repository ppa:koxt2/datarecovery
-  sudo apt update
-  sudo apt install datarecovery
-  ```
-  [View on Launchpad](https://launchpad.net/~koxt2/+archive/ubuntu/datarecovery)
-</details>
-
-<details>
-<summary><b>Arch Linux</b></summary>
-
-- Install from AUR:
-  ```bash
-  yay -S datarecovery
-  # or
-  paru -S datarecovery
-  ```
-  [View on AUR](https://aur.archlinux.org/packages/datarecovery)
-</details>
 
 ---
 
