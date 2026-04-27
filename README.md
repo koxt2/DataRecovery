@@ -128,7 +128,7 @@ A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Rec
 <summary><b>openSUSE Tumbleweed</b></summary>
 
 ```bash
-sudo zypper install git meson ninja gtk4-devel libadwaita-devel glib2-devel python3-gobject python3-gobject-devel desktop-file-utils gnu_ddrescue photorec rdfind udisks2 polkit
+sudo zypper install git meson ninja glib2-devel python3-gobject desktop-file-utils gnu_ddrescue testdisk rdfind udisks2 polkit
 ```
 </details>
 
@@ -136,20 +136,20 @@ sudo zypper install git meson ninja gtk4-devel libadwaita-devel glib2-devel pyth
 <summary><b>Fedora</b></summary>
 
 ```bash
-sudo dnf install git meson ninja-build gtk4-devel libadwaita-devel glib2-devel python3-gobject python3-gobject-devel desktop-file-utils ddrescue testdisk rdfind udisks2 polkit
+sudo dnf install git meson ninja-build glib2-devel python3-gobject desktop-file-utils ddrescue testdisk rdfind udisks2 polkit
 ```
 </details>
 
 <details>
-<summary><b>Ubuntu/Mint/Debian</b></summary>
+<summary><b>Ubuntu/Debian</b></summary>
 
 ```bash
-sudo apt install git meson ninja-build libgtk-4-dev libadwaita-1-dev libglib2.0-dev python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 desktop-file-utils gddrescue testdisk rdfind udisks2 polkitd
+sudo apt install git meson ninja-build libglib2.0-dev python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 desktop-file-utils gddrescue testdisk rdfind udisks2 polkitd
 ```
 </details>
 
 <details>
-<summary><b>Arch Linux</b></summary>
+<summary><b>Arch</b></summary>
 
 ```bash
 sudo pacman -S git meson ninja gtk4 libadwaita glib2 python-gobject desktop-file-utils ddrescue testdisk rdfind udisks2 polkit
