@@ -59,6 +59,7 @@ datarecovery_sources = [
   'smart_data.py',
   'smart_dialog.py',
   'smart_dialog_columnview.py',
+  'utils.py',
 ]
 
 install_data(datarecovery_sources, install_dir: moduledir)

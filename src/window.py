@@ -50,7 +50,6 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
     columnview_model                = Gtk.Template.Child()
     
     save_image_switch               = Gtk.Template.Child()
-    log_switch                      = Gtk.Template.Child()
     corrupted_switch                = Gtk.Template.Child()
     dupes_switch                    = Gtk.Template.Child()
     file_types_row                  = Gtk.Template.Child()
@@ -81,7 +80,7 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
         self.device_dropdown = DeviceDropdown(self)
         self.device_monitor = DeviceMonitor(self.device_dropdown)
         self.device_columnview = DeviceColumnView(self, self.device_dropdown)
-        self.mount_checker = MountedPartitionChecker(self, self.device_dropdown)
+        self.mount_checker = MountedPartitionChecker(self)
         self.recovery_dialog = RecoveryProgressDialog(self)
         
         self.select_device_dropdown.connect("notify::selected", self._on_device_selected)
@@ -151,6 +150,7 @@ class DatarecoveryWindow(Adw.ApplicationWindow):
                 else:
                     self.select_device_dropdown.set_selected(SELECTION_NO_DEVICE)
             except Exception as e:
+                self.logger.error(f"File selection dialog error: {e}")
                 self.select_device_dropdown.set_selected(SELECTION_NO_DEVICE)
 
         dialog.open(self, None, on_file_selected, None)

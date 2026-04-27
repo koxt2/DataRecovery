@@ -31,7 +31,6 @@ def apply_image_file_settings(window):
 def get_settings(window):
     settings = {
         'save_image': window.save_image_switch.get_active(),
-        'save_logs': window.log_switch.get_active(),
         'keep_corrupted': window.corrupted_switch.get_active(),
         'remove_duplicates': window.dupes_switch.get_active(),
         'selected_extensions': []

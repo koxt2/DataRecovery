@@ -25,18 +25,19 @@ from .partition_guids import PARTITION_TYPE_GUIDS
 from . import settings
 from . import smart_data
 from .smart_dialog import SmartDialog
+from .utils import format_size
 
 class PartitionRow(GObject.Object):
     __gtype_name__ = 'PartitionRow'
 
-    def __init__(self, mounted = False, path='', size='', filesystem='', label='', type='', mount_path=None, smart_status='unavailable', is_whole_device=False):
+    def __init__(self, mounted=False, path='', size='', filesystem='', label='', part_type='', mount_path=None, smart_status='unavailable', is_whole_device=False):
         super().__init__()
         self._mounted = mounted
         self._path = path
         self._size = size
         self._filesystem = filesystem
         self._label = label
-        self._type = type
+        self._type = part_type
         self._mount_path = mount_path
         self._smart_status = smart_status
         self._is_whole_device = is_whole_device
@@ -62,7 +63,7 @@ class PartitionRow(GObject.Object):
         return self._label or ''
 
     @GObject.Property(type=str)
-    def type(self):
+    def part_type(self):
         return self._type or ''
 
     @GObject.Property(type=str)
@@ -97,7 +98,7 @@ class DeviceColumnView:
         self.window.label_factory.connect("setup", self._label_factory_setup)
         self.window.label_factory.connect("bind", self._label_factory_bind('label'))
         self.window.type_factory.connect("setup", self._label_factory_setup)
-        self.window.type_factory.connect("bind", self._label_factory_bind('type'))
+        self.window.type_factory.connect("bind", self._label_factory_bind('part_type'))
         self.window.health_factory.connect("setup", self._health_factory_setup)
         self.window.health_factory.connect("bind", self._health_factory_bind)
     
@@ -182,15 +183,6 @@ class DeviceColumnView:
         dialog = SmartDialog(self.window, device_path)
         dialog.present(self.window)
    
-    def _format_size(self, size_bytes):
-        if not size_bytes:
-            return "0 MB"
-        size_mb = size_bytes / (1024 * 1024)
-        if size_mb > 1000:
-            return f"{size_mb/1024:.2f} GB"
-        else:
-            return f"{size_mb:.2f} MB"
-    
     def _set_mount_tooltip(self, widget, row):
         if getattr(row, 'mounted', False):
             mount_path = getattr(row, 'mount_path', None)
@@ -219,7 +211,7 @@ class DeviceColumnView:
         smart_status, _ = smart_data.get_smart_status(device['path'])
         
         # Always show the whole device as a row
-        size_str = self._format_size(device.get('size', 0))
+        size_str = format_size(device.get('size', 0))
         part_type_name = 'WHOLE DEVICE'
         row = PartitionRow(
             mounted=device.get('mounted', False),
@@ -227,7 +219,7 @@ class DeviceColumnView:
             size=size_str,
             filesystem=device.get('id_type', ''),
             label=device.get('label', ''),
-            type=part_type_name,
+            part_type=part_type_name,
             mount_path=device.get('mount_path'),
             smart_status=smart_status,
             is_whole_device=True
@@ -236,7 +228,7 @@ class DeviceColumnView:
         
         # Then show all partitions (if any)
         for p in matching_parts:
-            size_str = self._format_size(p.get('size', 0))
+            size_str = format_size(p.get('size', 0))
             part_type_guid = p.get('parttype', '')
             part_type_name = PARTITION_TYPE_GUIDS.get(part_type_guid.lower(), part_type_guid) if part_type_guid else ''
             row = PartitionRow(
@@ -245,7 +237,7 @@ class DeviceColumnView:
                 size=size_str,
                 filesystem=p.get('id_type', ''),
                 label=p.get('label', ''),
-                type=part_type_name,
+                part_type=part_type_name,
                 mount_path=p.get('mount_path')
             )
             self.window.columnview_liststore.append(row)
@@ -255,10 +247,9 @@ class DeviceColumnView:
     def update_columnview_for_image(self, image_path):
         self.window.columnview_liststore.remove_all()
         
-        # Get file size if the image exists
         try:
             size_bytes = os.path.getsize(image_path) if os.path.exists(image_path) else 0
-            size_str = self._format_size(size_bytes)
+            size_str = format_size(size_bytes)
         except (OSError, IOError):
             size_str = "Unknown"
         
@@ -268,7 +259,7 @@ class DeviceColumnView:
             size=size_str,
             filesystem='',
             label=os.path.basename(image_path),
-            type='IMAGE FILE',
+            part_type='IMAGE FILE',
             mount_path=None
         )
         self.window.columnview_liststore.append(row)

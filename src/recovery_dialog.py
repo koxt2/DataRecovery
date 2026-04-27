@@ -18,7 +18,7 @@
 #
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-from gi.repository import Gtk, Adw, GLib
+from gi.repository import Gtk, Adw
 import logging
 
 @Gtk.Template(resource_path='/datarecovery/gtk/recovery_dialog.ui')
@@ -80,20 +80,20 @@ class RecoveryProgressDialog(Adw.AlertDialog):
                 lines.append(f'<span foreground="{color}">{icon}</span>  {description}')
             
             self.steps_label.set_markup('\n'.join(lines))
-        
-        GLib.idle_add(_update)
+
+        _update()
     
     def update_status(self, status_text):
         if self.status_label:
-            GLib.idle_add(lambda: self.status_label.set_markup(f"<b>{status_text}</b>"))
+            self.status_label.set_markup(f"<b>{status_text}</b>")
     
     def update_progress(self, fraction=None):
         if fraction is not None and self.progress_bar:
-            GLib.idle_add(lambda: self.progress_bar.set_fraction(fraction))
+            self.progress_bar.set_fraction(fraction)
     
     def mark_complete(self):
         self.recovery_complete = True
-        GLib.idle_add(self._change_button_to_close)
+        self._change_button_to_close()
     
     def _change_button_to_close(self):
         self.set_response_label("cancel", "Close")

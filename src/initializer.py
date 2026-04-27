@@ -1,4 +1,4 @@
-# main.py
+# initializer.py
 #
 # Copyright 2025 koxt2
 #

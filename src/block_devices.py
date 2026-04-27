@@ -131,6 +131,13 @@ def _parse_size(size_str):
         logger.warning(f"Could not parse size '{size_str}': {e}")
         return 0
 
+def get_image_size(image_path):
+    try:
+        return os.path.getsize(image_path)
+    except OSError as e:
+        logger.error(f"Failed to get image size for {image_path}: {e}")
+        return 0
+
 def get_device_size(device_path):
     try:
         result = subprocess.run(
@@ -158,8 +165,8 @@ def get_available_space(directory_path):
         logger.error(f"Failed to get available space for {directory_path}: {e}")
         return 0
 
-def check_sufficient_space(device_path, destination_dir, safety_margin_percent=0.10):
-    device_size = get_device_size(device_path)
+def check_sufficient_space(device_path, destination_dir, safety_margin_percent=0.10, source_size=None):
+    device_size = source_size if source_size is not None else get_device_size(device_path)
     available_space = get_available_space(destination_dir)
     
     if device_size == 0:

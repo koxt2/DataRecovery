@@ -24,7 +24,7 @@ from gi.repository import Adw, GLib
 from . import block_devices
 
 class MountedPartitionChecker:
-    def __init__(self, parent_window, device_dropdown):
+    def __init__(self, parent_window):
         self.parent_window = parent_window
         self.logger = logging.getLogger('datarecovery')
     

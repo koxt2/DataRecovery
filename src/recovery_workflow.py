@@ -28,7 +28,8 @@ from .file_operations import FileOperations
 from .recover import DeviceRecovery
 from .duplicates import DuplicateRemover
 from .config import RECOVERED_FILES_DIR
-from .block_devices import check_sufficient_space
+from .block_devices import check_sufficient_space, get_image_size
+from .utils import format_bytes
 
 
 class RecoveryWorkflow:
@@ -58,7 +59,7 @@ class RecoveryWorkflow:
         
         # Only add imaging step for physical devices
         if not is_image_file:
-            steps.append(('imaging', 'Create disk images'))
+            steps.append(('imaging', 'Create disk image'))
         
         steps.append(('recovery', 'Recover files'))
         
@@ -73,7 +74,7 @@ class RecoveryWorkflow:
         if destination_path and user_settings.get("save_image", False) and not is_image_file:
             steps.append(('save_images', 'Save disk images'))
         
-        if destination_path and user_settings.get("save_logs", False):
+        if destination_path:
             steps.append(('save_logs', 'Save logs'))
         
         self.recovery_dialog.setup_steps(steps)
@@ -108,15 +109,20 @@ class RecoveryWorkflow:
         try:
             destination_path = getattr(self.window, 'destination_path', None)
             keep_corrupted = user_settings.get("keep_corrupted", False)
-            enable_logs = user_settings.get("save_logs", False)
             remove_duplicates = user_settings.get("remove_duplicates", False)
             save_image = user_settings.get("save_image", False)
             
             # Check there is enough space on destination for recovered files (and images if applicable)
-            if not is_image_file and destination_path:
-                is_sufficient, device_size, dest_available, dest_required = check_sufficient_space(
-                    device_path, destination_path
-                )
+            if destination_path:
+                if is_image_file:
+                    source_size = get_image_size(device_path)
+                    is_sufficient, device_size, dest_available, dest_required = check_sufficient_space(
+                        device_path, destination_path, source_size=source_size
+                    )
+                else:
+                    is_sufficient, device_size, dest_available, dest_required = check_sufficient_space(
+                        device_path, destination_path
+                    )
                 if not is_sufficient:
                     content = "image and recovered files" if save_image else "recovered files"
                     self.logger.error(
@@ -125,8 +131,8 @@ class RecoveryWorkflow:
                     )
                     GLib.idle_add(
                         self.recovery_dialog.update_status,
-                        f"Insufficient space at destination: need {self._format_bytes(dest_required)} "
-                        f"but only {self._format_bytes(dest_available)} available"
+                        f"Insufficient space at destination: need {format_bytes(dest_required)} "
+                        f"but only {format_bytes(dest_available)} available"
                     )
                     return
             
@@ -153,13 +159,14 @@ class RecoveryWorkflow:
             
             # Step 2: Run PhotoRec to recover files from images
             GLib.idle_add(self.recovery_dialog.update_step_status, 'recovery', 'active')
+            GLib.idle_add(self.recovery_dialog.update_progress, 0)  # Reset progress bar for PhotoRec
             recovery_dir = os.path.join(self.working_dir, RECOVERED_FILES_DIR)
             
             # For image files, pass the file path directly to PhotoRec
             # For devices, use the working_dir where images were created
             recovery_source = device_path if is_image_file else self.working_dir
             recovery_success = self.photorec_recovery.setup_recovery(
-                recovery_source, recovery_dir, keep_corrupted, enable_logs
+                recovery_source, recovery_dir, keep_corrupted
             )
             
             if not recovery_success:
@@ -183,6 +190,7 @@ class RecoveryWorkflow:
             
             # Step 4: Organize recovered files by type (only selected extensions)
             GLib.idle_add(self.recovery_dialog.update_step_status, 'organize', 'active')
+            GLib.idle_add(self.recovery_dialog.update_progress, 0)
             GLib.idle_add(self.recovery_dialog.update_status, "Organizing files by type")
             selected_extensions = user_settings.get('selected_extensions', [])
             self.file_operations.organize_recovered_files(recovery_dir, destination_path, selected_extensions)
@@ -195,8 +203,8 @@ class RecoveryWorkflow:
                 self.file_operations.move_images_to_destination(self.working_dir, destination_path)
                 GLib.idle_add(self.recovery_dialog.update_step_status, 'save_images', 'complete')
             
-            # Step 6: Move logs if requested
-            if destination_path and user_settings.get("save_logs", False):
+            # Step 6: Move logs (always done when destination is set)
+            if destination_path:
                 GLib.idle_add(self.recovery_dialog.update_step_status, 'save_logs', 'active')
                 GLib.idle_add(self.recovery_dialog.update_status, "Saving logs")
                 self.file_operations.move_logs_to_destination(self.working_dir, destination_path)
@@ -220,9 +228,4 @@ class RecoveryWorkflow:
             
             GLib.idle_add(show_error_dialog)
     
-    def _format_bytes(self, bytes_value):
-        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
-            if bytes_value < 1024.0:
-                return f"{bytes_value:.1f} {unit}"
-            bytes_value /= 1024.0
-        return f"{bytes_value:.1f} PB"
+

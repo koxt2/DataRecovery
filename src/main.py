@@ -38,12 +38,13 @@ class DatarecoveryApplication(Adw.Application):
         win = self.props.active_window
         if not win:
             win = DatarecoveryWindow(application=self)
-        win.present()
+            win.present()
 
-        initializer = Initializer(window=win)
-        
-        if initializer.tools_available:
-            win.setup_window(working_dir=initializer.working_dir)
+            initializer = Initializer(window=win)
+            if initializer.tools_available:
+                win.setup_window(working_dir=initializer.working_dir)
+        else:
+            win.present()
 
     def create_action(self, name, callback, shortcuts=None):
         action = Gio.SimpleAction.new(name, None)

@@ -25,15 +25,12 @@ import logging
 from gi.repository import GLib
 from .log import setup_imager_logging
 from .config import (
-    IMAGE_FILE_EXTENSION, 
-    MAP_FILE_EXTENSION, 
-    DDRESCUE_RETRY_PASSES,
+    IMAGE_FILE_EXTENSION,
+    MAP_FILE_EXTENSION,
     DISK_SPACE_SAFETY_MARGIN_PERCENT
 )
 from .block_devices import check_sufficient_space
-
-logger = logging.getLogger('datarecovery')
-imager_logger = logging.getLogger('imager_logger')
+from .utils import format_bytes
 
 class DeviceImager:
     def __init__(self, recovery_dialog=None):
@@ -47,14 +44,13 @@ class DeviceImager:
         self.cancelled = False
         
         process = subprocess.Popen(
-            ["pkexec", "datarecovery-pkexec-helper", 
-             device_path, image_path, mapfile_path, 
+            ["pkexec", "datarecovery-pkexec-helper",
+             device_path, image_path, mapfile_path,
              str(owner_uid), str(owner_gid)],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
-            bufsize=1,
-            universal_newlines=True
+            bufsize=1
         )
         
         self.current_process = process
@@ -65,7 +61,7 @@ class DeviceImager:
                     self.logger.info("Imager cancelled by user")
                     try:
                         process.terminate()
-                    except:
+                    except OSError:
                         pass
                     break
                     
@@ -117,8 +113,8 @@ class DeviceImager:
             if self.recovery_dialog:
                 GLib.idle_add(
                     self.recovery_dialog.update_status,
-                    f"Insufficient disk space: need {self._format_bytes(required_space)} "
-                    f"but only {self._format_bytes(available_space)} available"
+                    f"Insufficient disk space: need {format_bytes(required_space)} "
+                    f"but only {format_bytes(available_space)} available"
                 )
             return False
         
@@ -146,13 +142,6 @@ class DeviceImager:
         
         return success
     
-    def _format_bytes(self, bytes_value):
-        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
-            if bytes_value < 1024.0:
-                return f"{bytes_value:.1f} {unit}"
-            bytes_value /= 1024.0
-        return f"{bytes_value:.1f} PB"
-
     def cancel(self):
         self.cancelled = True
         self.logger.info("Cancellation requested - stopping ddrescue")

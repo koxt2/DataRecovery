@@ -165,12 +165,18 @@ class FileOperations:
             return False
         
         failed_extensions = []
-        for ext in extensions:
+        total = len(extensions)
+        for i, ext in enumerate(extensions):
             if not self._organize_by_extension(recovery_dir, destination_dir, ext):
                 failed_extensions.append(ext)
+            if self.recovery_dialog and total > 0:
+                GLib.idle_add(self.recovery_dialog.update_progress, (i + 1) / total)
         
         if not self._organize_files_without_extension(recovery_dir, destination_dir):
             self.logger.warning("Failed to organize some files without extensions")
+        
+        if self.recovery_dialog:
+            GLib.idle_add(self.recovery_dialog.update_progress, 1.0)
         
         if failed_extensions:
             self.logger.warning(f"Failed to organize files with extensions: {', '.join(failed_extensions)}")
@@ -213,7 +219,7 @@ class FileOperations:
         else:
             try:
                 os.rmdir(corrupted_dir)
-            except:
+            except OSError:
                 pass
         
         return True
@@ -256,7 +262,7 @@ class FileOperations:
             try:
                 os.rmdir(no_ext_dir)
                 self.logger.debug("Removed empty no_extension directory")
-            except:
+            except OSError:
                 pass
         else:
             self.logger.info(f"Organized files without extension: {files_moved} moved")

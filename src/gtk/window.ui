@@ -162,12 +162,6 @@
                               </object>
                             </child>
                             <child>
-                              <object class="AdwSwitchRow" id="log_switch">
-                                <property name="title">Save logs and reports</property>
-                                <property name="tooltip-text">Save detailed logs and reports for the recovery process, duplicate removal, and application output to your destination folder.</property>
-                              </object>
-                            </child>
-                            <child>
                               <object class="AdwButtonRow" id="file_types_row">
                                 <child>
                                   <object class="GtkBox">
