@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [v0.5.0] - 2026-04-28
 ### Added
 - Progress bar updates while recovering data and organising files
 - New `utils.py` module with shared `format_bytes` and `format_size` functions
@@ -13,6 +13,7 @@
 - `MountedPartitionChecker` no longer takes an unused `device_dropdown` parameter
 - `PartitionRow.type` property renamed to `part_type` to avoid shadowing the Python built-in
 - README update
+- Updated screenshots
 
 ### Fixed
 - Duplicate `/d` flag in PhotoRec command that would confuse file output location

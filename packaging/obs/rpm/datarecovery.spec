@@ -61,6 +61,28 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
+* Tue Apr 28 2026 koxt2 <koxt2@protonmail.com> - 0.5.0
+- Progress bar updates while recovering data and organising files
+- New `utils.py` module with shared `format_bytes` and `format_size` functions
+- Disk space check now also runs when recovering from an image file (previously only ran for physical devices)
+- Logs are now always generated and saved to destination (no longer optional)
+- This was needed so that photorec progress can be displayed
+- Application no longer re-initialises when brought back to the foreground (subsequent activations now just re-present the existing window)
+- `MountedPartitionChecker` no longer takes an unused `device_dropdown` parameter
+- `PartitionRow.type` property renamed to `part_type` to avoid shadowing the Python built-in
+- README update
+- Duplicate `/d` flag in PhotoRec command that would confuse file output location
+- Bare `except:` clauses replaced with `except OSError:` in three places to avoid swallowing unexpected exceptions
+- Redundant module-level loggers in `imager.py` removed (class already creates its own)
+- Duplicate `universal_newlines=True` kwarg removed from `subprocess.Popen` call in `imager.py` (`text=True` is the same thing)
+- Unused `DDRESCUE_RETRY_PASSES` import removed from `imager.py`
+- Unused `os` import removed from `block_devices.py`
+- Silently-swallowed file dialog exception in `window.py` is now logged
+- Duplicate `_format_bytes` method removed from `DeviceImager` and `RecoveryWorkflow`; both now use `utils.format_bytes`
+- Wrong file name in `initializer.py` header comment (`main.py` → `initializer.py`)
+- Removed redundant internal `GLib.idle_add` wrapping in `RecoveryProgressDialog` methods; callers already schedule on the main thread
+- Updated screenshots
+
 * Sat Dec 27 2025 koxt2 <koxt2@protonmail.com> - 0.4.1
 - Updated screenshots
 
