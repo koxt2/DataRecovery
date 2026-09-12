@@ -2,7 +2,7 @@
 # Simplified for OBS RPM builds
 
 Name:           datarecovery
-Version:        _auto_
+Version:        0.5.0
 Release:        0
 Summary:        GTK4/Libadwaita application for data recovery
 License:        GPL-2.0-or-later

@@ -13,6 +13,8 @@ __pycache__/
 
 # Ignore help files
 workflow.md
+new_workflow.md
+packaging/launchpad/Dockerfile
 
 # Ignore generated GTK UI files
 src/gtk/recovery_dialog.cmb

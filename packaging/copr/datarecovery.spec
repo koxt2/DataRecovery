@@ -2,7 +2,7 @@
 
 Name:           datarecovery
 Version:        0.5.0
-Release:        1%{?dist}
+Release:        2
 Summary:        GTK4/Libadwaita application for data recovery
 License:        GPL-2.0-or-later
 BuildArch:      noarch
