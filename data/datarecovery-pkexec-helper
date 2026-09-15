@@ -10,18 +10,24 @@
 
 set -e
 
-# Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path> <uid> <gid>
-if [ $# -ne 5 ]; then
+# Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path>
+if [ $# -ne 3 ]; then
     echo "Error: Invalid arguments" >&2
-    echo "Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path> <uid> <gid>" >&2
+    echo "Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path>" >&2
     exit 1
 fi
 
 DEVICE_PATH="$1"
 IMAGE_PATH="$2"
 MAPFILE_PATH="$3"
-OWNER_UID="$4"
-OWNER_GID="$5"
+
+if [ -z "$PKEXEC_UID" ]; then
+    echo "Error: This tool is intended to be called via pkexec only" >&2
+    exit 1
+fi
+
+OWNER_UID="$PKEXEC_UID"
+OWNER_GID=$(id -g $OWNER_UID)
 
 # Validate UID and GID are numeric
 if ! [[ "$OWNER_UID" =~ ^[0-9]+$ ]] || ! [[ "$OWNER_GID" =~ ^[0-9]+$ ]]; then
