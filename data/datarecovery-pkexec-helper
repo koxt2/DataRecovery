@@ -42,8 +42,11 @@ if [ "$OWNER_UID" -lt 1000 ] || [ "$OWNER_UID" -gt 65533 ]; then
 fi
 
 if [ "$OWNER_GID" -lt 1000 ] || [ "$OWNER_GID" -gt 65533 ]; then
-    echo "Error: GID out of reasonable range (1000-65533): $OWNER_GID" >&2
-    exit 1
+    # 100 is the "users" group on a couple of Linux distributions.
+    if [ "$OWNER_GID" -ne 100 ]; then
+        echo "Error: GID out of reasonable range (1000-65533,100): $OWNER_GID" >&2
+        exit 1
+    fi
 fi
 
 # Device must be under /dev/ (not a symlink to elsewhere)
