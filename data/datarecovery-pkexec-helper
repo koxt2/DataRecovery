@@ -10,74 +10,24 @@
 
 set -e
 
-# Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path> <uid> <gid>
-if [ $# -ne 5 ]; then
+# Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path>
+if [ $# -ne 3 ]; then
     echo "Error: Invalid arguments" >&2
-    echo "Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path> <uid> <gid>" >&2
+    echo "Usage: datarecovery-pkexec-helper <device_path> <image_path> <mapfile_path>" >&2
     exit 1
 fi
 
 DEVICE_PATH="$1"
 IMAGE_PATH="$2"
 MAPFILE_PATH="$3"
-OWNER_UID="$4"
-OWNER_GID="$5"
 
-# Validate device path (must be a block device in /dev)
-if [ ! -b "$DEVICE_PATH" ]; then
-    echo "Error: Device path is not a block device: $DEVICE_PATH" >&2
+if [ -z "$PKEXEC_UID" ]; then
+    echo "Error: This tool is intended to be called via pkexec only" >&2
     exit 1
 fi
 
-# Device must be under /dev/ (not a symlink to elsewhere)
-REAL_DEVICE=$(realpath "$DEVICE_PATH")
-if [[ "$REAL_DEVICE" != /dev/* ]]; then
-    echo "Error: Device path must be under /dev: $DEVICE_PATH" >&2
-    exit 1
-fi
-
-# Validate that image and mapfile paths are in safe locations
-# Whitelist of allowed path prefixes for output files
-ALLOWED_PREFIXES=(
-    "/home/"
-    "/tmp/"
-    "/var/tmp/"
-    "$HOME/"
-)
-
-validate_output_path() {
-    local path="$1"
-    local path_type="$2"
-    
-    # Resolve to absolute path
-    local dir=$(dirname "$path")
-    if [ ! -d "$dir" ]; then
-        echo "Error: Parent directory does not exist for $path_type: $dir" >&2
-        exit 1
-    fi
-    
-    local real_path=$(realpath -m "$path")
-    
-    # Check against whitelist
-    local allowed=false
-    for prefix in "${ALLOWED_PREFIXES[@]}"; do
-        # Expand variables like $HOME
-        prefix=$(eval echo "$prefix")
-        if [[ "$real_path" == "$prefix"* ]]; then
-            allowed=true
-            break
-        fi
-    done
-    
-    if [ "$allowed" = false ]; then
-        echo "Error: $path_type path not in allowed location: $path" >&2
-        echo "Allowed prefixes: ${ALLOWED_PREFIXES[*]}" >&2
-        exit 1
-    fi
-}
-
-validate_output_path "$IMAGE_PATH" "Image"
-validate_output_path "$MAPFILE_PATH" "Mapfile"
+OWNER_UID="$PKEXEC_UID"
+OWNER_GID=$(id -g $OWNER_UID)
 
 # Validate UID and GID are numeric
 if ! [[ "$OWNER_UID" =~ ^[0-9]+$ ]] || ! [[ "$OWNER_GID" =~ ^[0-9]+$ ]]; then
@@ -98,34 +48,158 @@ if [ "$OWNER_UID" -lt 1000 ] || [ "$OWNER_UID" -gt 65533 ]; then
 fi
 
 if [ "$OWNER_GID" -lt 1000 ] || [ "$OWNER_GID" -gt 65533 ]; then
-    echo "Error: GID out of reasonable range (1000-65533): $OWNER_GID" >&2
+    # 100 is the "users" group on a couple of Linux distributions.
+    if [ "$OWNER_GID" -ne 100 ]; then
+        echo "Error: GID out of reasonable range (1000-65533,100): $OWNER_GID" >&2
+        exit 1
+    fi
+fi
+
+# Device must be under /dev/ (not a symlink to elsewhere)
+REAL_DEVICE=$(realpath "$DEVICE_PATH")
+if [[ "$REAL_DEVICE" != /dev/* ]]; then
+    echo "Error: Device path must be under /dev: $DEVICE_PATH" >&2
     exit 1
 fi
+
+# Validate device path (must be a block device in /dev)
+if [ ! -b "$REAL_DEVICE" ]; then
+    echo "Error: Device path is not a block device: $DEVICE_PATH" >&2
+    exit 1
+fi
+
+# Validate that image and mapfile paths are in safe locations
+# Whitelist of allowed path prefixes for output files
+ALLOWED_PREFIXES=(
+    "/home/"
+    "/tmp/"
+    "/var/tmp/"
+    "$HOME/"
+)
+
+validate_output_path() {
+    local path="$1"
+    local path_type="$2"
+
+    # Resolve to absolute path
+    local real_path=$(realpath -m "$path")
+    
+    # Get parent directory
+    local dir=$(dirname "$real_path")
+    if [ ! -d "$dir" ]; then
+        echo "Error: Parent directory does not exist for $path_type: $dir" >&2
+        exit 1
+    fi
+
+    if [ -z "$output_dir" ]; then
+        output_dir="$dir"
+    elif [ "$output_dir" != "$dir" ]; then
+        # we want to make sure the output files go into the same directory
+        echo "Error: No common output directory for output paths: $output_dir vs. $dir" >&2
+        exit 1
+    fi
+    
+    # Check against whitelist
+    local allowed=false
+    for prefix in "${ALLOWED_PREFIXES[@]}"; do
+        # Expand variables like $HOME
+        prefix=$(eval echo "$prefix")
+        if [[ "$real_path" == "$prefix"* ]]; then
+            allowed=true
+            break
+        fi
+    done
+    
+    if [ "$allowed" = false ]; then
+        echo "Error: $path_type path not in allowed location: $real_path" >&2
+        echo "Allowed prefixes: ${ALLOWED_PREFIXES[*]}" >&2
+        exit 1
+    fi
+}
+
+validate_output_path "$IMAGE_PATH" "Image"
+validate_output_path "$MAPFILE_PATH" "Mapfile"
+
+# require a common  output dir for the map and image file so that we can
+# create a safe temporary directory in there and in the end rename the output
+# files atomically to the expected output paths.
+
+if [ -z "$output_dir" ]; then
+    echo "Error: Failed to detect common output directory" >&2
+    exit 1
+fi
+
+echo "Creating safe temporary directory in $output_dir"
+
+# create a private safe directory in the output directory
+ddrescue_dir=$(mktemp -d "$output_dir/ddrescue.tmp.XXXXXXX")
+cd $ddrescue_dir
+
+# make sure the directory is still owned by us and was not replaced by
+# something else in the meantime
+if [ ! -O "." ]; then
+    echo "Error: temporary directory $ddrescue_dir has unsafe ownership" >&2
+    exit 1
+fi
+
+num_files=$(find -mindepth 1 | wc -l)
+if [ $num_files -ne 0 ]; then
+    echo "Error: temporary directory $ddrescue_dir unexpectedly already contains files" >&2
+    exit 1
+fi
+
+# Check once again if we are in one of the whitelisted prefixes to make sure
+# we have not been tricked into following a symbolic link by now.
+validate_output_path $PWD
+
+# From here on we can be sure to operate within a safe directory. Establish a
+# cleanup handler now which will remove it again no matter how script
+# execution ends up.
+cleanup_ddrescue_dir() {
+    rm -rf .*
+    rmdir $PWD
+}
+
+trap cleanup_ddrescue_dir EXIT
 
 # Run ddrescue - 4 passes as per application design
 RETRY_PASSES=3
 
 echo "Starting ddrescue imaging of $DEVICE_PATH"
 
+# use paths relative to the CWD only from now on to prevent following any
+# newly appearing symbolic links in the output paths
+tmp_image="./image"
+tmp_mapfile="./mapfile"
+
 # Pass 1: Fast copy without retries
 echo "Pass 1/4: Fast copy"
-ddrescue --force --no-scrape --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+ddrescue --force --no-scrape --verbose "$DEVICE_PATH" "$tmp_image" "$tmp_mapfile"
 
 # Pass 2: Retry with direct I/O
 echo "Pass 2/4: Direct I/O retry"
-ddrescue --force --idirect --retry-passes=$RETRY_PASSES --no-scrape --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+ddrescue --force --idirect --retry-passes=$RETRY_PASSES --no-scrape --verbose "$DEVICE_PATH" "$tmp_image" "$tmp_mapfile"
 
 # Pass 3: Reverse retry
 echo "Pass 3/4: Reverse retry"
-ddrescue --force --idirect --retry-passes=$RETRY_PASSES --reverse --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+ddrescue --force --idirect --retry-passes=$RETRY_PASSES --reverse --verbose "$DEVICE_PATH" "$tmp_image" "$tmp_mapfile"
 
 # Pass 4: Final scraping
 echo "Pass 4/4: Final scraping"
-ddrescue --force --idirect --retry-passes=$RETRY_PASSES --verbose "$DEVICE_PATH" "$IMAGE_PATH" "$MAPFILE_PATH"
+ddrescue --force --idirect --retry-passes=$RETRY_PASSES --verbose "$DEVICE_PATH" "$tmp_image" "$tmp_mapfile"
 
 # Change ownership of created files back to the user
 echo "Changing ownership to $OWNER_UID:$OWNER_GID"
-chown "$OWNER_UID:$OWNER_GID" "$IMAGE_PATH" "$MAPFILE_PATH"
+chown -h "$OWNER_UID:$OWNER_GID" "$tmp_image" "$tmp_mapfile"
+
+echo "Moving output files to target paths"
+image_base=$(basename $IMAGE_PATH)
+mapfile_base=$(basename $MAPFILE_PATH)
+# if the target files already exist (even as symlinks) then they will be
+# replaced.
+mv --no-copy --no-target-directory "$tmp_image" "../$image_base"
+mv --no-copy --no-target-directory "$tmp_mapfile" "../$mapfile_base"
+
 
 echo "Imaging completed successfully"
 exit 0

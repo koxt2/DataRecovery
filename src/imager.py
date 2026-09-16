@@ -40,13 +40,12 @@ class DeviceImager:
         self.current_process = None
         self.cancelled = False
 
-    def run_imager(self, device_path, image_path, mapfile_path, owner_uid, owner_gid):
+    def run_imager(self, device_path, image_path, mapfile_path):
         self.cancelled = False
         
         process = subprocess.Popen(
             ["pkexec", "datarecovery-pkexec-helper",
-             device_path, image_path, mapfile_path,
-             str(owner_uid), str(owner_gid)],
+             device_path, image_path, mapfile_path],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
@@ -123,9 +122,6 @@ class DeviceImager:
             f"{required_space:,} bytes required for {device_size:,} byte device"
         )
 
-        owner_uid = os.getuid()
-        owner_gid = os.getgid()
-
         safe_name = device_path.replace('/dev/', '').replace('/', '_')
         image_path = os.path.join(working_dir, f"{safe_name}{IMAGE_FILE_EXTENSION}")
         mapfile_path = os.path.join(working_dir, f"{safe_name}_mapfile{MAP_FILE_EXTENSION}")
@@ -135,7 +131,7 @@ class DeviceImager:
         self.logger.info(f"Mapfile: {mapfile_path}")
         self.logger.info("Running ddrescue")
         
-        success = self.run_imager(device_path, image_path, mapfile_path, owner_uid, owner_gid)
+        success = self.run_imager(device_path, image_path, mapfile_path)
         
         if success:
             self.logger.info(f"Image creation completed and saved to {working_dir}")
