@@ -84,6 +84,20 @@
   </provides>
   
   <releases>
+    <release version="0.6.0" date="2026-09-16">
+      <description>
+        <p>Harden pkexec-helper and improve compatibility with Linux distros- #2</p>
+        <ul>
+          <li>Privileged ddrescue helper now derives ownership from `PKEXEC_UID`</li>
+          <li>Removed the Polkit `allow_gui` override</li>
+          <li>Hardened privileged operations against unsafe device paths and symbolic-link attacks</li>
+          <li>Added validation for device paths, output locations, ownership IDs, and temporary directories</li>
+          <li>Image and mapfile creation now uses private temporary directories and atomic moves</li>
+        </ul>
+      </description>
+    </release>
+
+
     <release version="0.5.0" date="2026-04-28">
       <description>
         <p>Meteinfo update</p>

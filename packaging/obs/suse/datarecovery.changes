@@ -1,9 +1,20 @@
 -------------------------------------------------------------------
-Thurs Sept 10 18:28:00 UTC 2026 - koxt2 <koxt2@protonmail.com>
+Thu Sep 16 18:56:00 UTC 2026 koxt2 <koxt2@protonmail.com>
+
+- Update to 0.6.0: Harden pkexec-helper and improve compatibility with Linux distros
+  * Privileged ddrescue helper now derives ownership from `PKEXEC_UID`
+  * Removed the Polkit `allow_gui` override
+  * Hardened privileged operations against unsafe device paths and symbolic-link attacks
+  * Added validation for device paths, output locations, ownership IDs, and temporary directories
+  * Image and mapfile creation now uses private temporary directories and atomic moves
+
+-------------------------------------------------------------------
+Thu Sep 10 18:28:00 UTC 2026 - koxt2 <koxt2@protonmail.com>
 
 - Update to 0.5.0-1: fix RPM lint errors
-  * Removed setBadness('polkit-untracked-privilege', 0) from datarecovery-rpmlintrc 
-  * Added filter for hicolor-icon-theme 
+  * Removed setBadness('polkit-untracked-privilege', 0) from
+    datarecovery-rpmlintrc
+  * Added filter for hicolor-icon-theme
   * Removed Group: from spec file
 
 -------------------------------------------------------------------

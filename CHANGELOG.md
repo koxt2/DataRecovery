@@ -1,5 +1,15 @@
 # Changelog
 
+## [v0.6.0] - 2026-04-28
+### Changed
+- Privileged ddrescue helper now derives ownership from `PKEXEC_UID`
+- Removed the Polkit `allow_gui` override
+
+### Fixed
+- Hardened privileged operations against unsafe device paths and symbolic-link attacks
+- Added validation for device paths, output locations, ownership IDs, and temporary directories
+- Image and mapfile creation now uses private temporary directories and atomic moves
+
 ## [v0.5.0] - 2026-04-28
 ### Added
 - Progress bar updates while recovering data and organising files

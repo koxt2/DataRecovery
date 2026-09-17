@@ -1,3 +1,12 @@
+datarecovery (0.6.0) UNRELEASED; urgency=medium
+  * Privileged ddrescue helper now derives ownership from `PKEXEC_UID`
+  * Removed the Polkit `allow_gui` override
+  * Hardened privileged operations against unsafe device paths and symbolic-link attacks
+  * Added validation for device paths, output locations, ownership IDs, and temporary directories
+  * Image and mapfile creation now uses private temporary directories and atomic moves
+
+-- koxt2 <koxt2@protonmail.com>  Thu, 16 Sep 2026 18:56:00 +0000
+
 datarecovery (0.5.0-1) UNRELEASED; urgency=medium
   * Progress bar updates while recovering data and organising files
   * New `utils.py` module with shared `format_bytes` and `format_size` functions
