@@ -1,5 +1,5 @@
 -------------------------------------------------------------------
-Thu Sep 16 18:56:00 UTC 2026 koxt2 <koxt2@protonmail.com>
+Wed Sep 16 18:56:00 UTC 2026 koxt2 <koxt2@protonmail.com>
 
 - Update to 0.6.0: Harden pkexec-helper and improve compatibility with Linux distros
   * Privileged ddrescue helper now derives ownership from `PKEXEC_UID`

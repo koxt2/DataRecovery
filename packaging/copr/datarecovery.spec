@@ -60,7 +60,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/datarecovery.desktop
 %{_datadir}/polkit-1/actions/datarecovery.policy
 
 %changelog
-* Thu Sep 16 2026 koxt2 <koxt2@protonmail.com> - 0.6.0
+* Wed Sep 16 2026 koxt2 <koxt2@protonmail.com> - 0.6.0
 - Privileged ddrescue helper now derives ownership from `PKEXEC_UID`
 - Removed the Polkit `allow_gui` override
 - Hardened privileged operations against unsafe device paths and symbolic-link attacks

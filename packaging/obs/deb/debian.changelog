@@ -5,7 +5,7 @@ datarecovery (0.6.0-1) UNRELEASED; urgency=medium
   * Added validation for device paths, output locations, ownership IDs, and temporary directories
   * Image and mapfile creation now uses private temporary directories and atomic moves
 
- -- koxt2 <koxt2@protonmail.com>  Thu, 16 Sep 2026 18:56:00 +0000
+ -- koxt2 <koxt2@protonmail.com>  Wed, 16 Sep 2026 18:56:00 +0000
 
 datarecovery (0.5.0-1) UNRELEASED; urgency=medium
   * Progress bar updates while recovering data and organising files

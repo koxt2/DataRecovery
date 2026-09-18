@@ -1,6 +1,6 @@
 # Changelog
 
-## [v0.6.0] - 2026-04-28
+## [v0.6.0] - 2026-09-16
 ### Changed
 - Privileged ddrescue helper now derives ownership from `PKEXEC_UID`
 - Removed the Polkit `allow_gui` override
