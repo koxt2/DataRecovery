@@ -1,3 +1,8 @@
+datarecovery (0.6.1-1) UNRELEASED; urgency=medium
+  * Bogus dates in changelog
+
+ -- koxt2 <koxt2@protonmail.com>  Fri, 18 Sep 2026 14:21:00 +0000
+
 datarecovery (0.6.0-1) UNRELEASED; urgency=medium
   * Privileged ddrescue helper now derives ownership from `PKEXEC_UID`
   * Removed the Polkit `allow_gui` override

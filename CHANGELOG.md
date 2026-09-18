@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.6.1] - 2026-09-18
+### Fixed
+- Bogus dates in changelogs
+
 ## [v0.6.0] - 2026-09-16
 ### Changed
 - Privileged ddrescue helper now derives ownership from `PKEXEC_UID`

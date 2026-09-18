@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Sep 18 14:21:00 UTC 2026 koxt2 <koxt2@protonmail.com>
+
+- Update to 0.6.1
+  * Bogus dates in changelog
+
+-------------------------------------------------------------------
+
+-------------------------------------------------------------------
 Wed Sep 16 18:56:00 UTC 2026 koxt2 <koxt2@protonmail.com>
 
 - Update to 0.6.0: Harden pkexec-helper and improve compatibility with Linux distros
