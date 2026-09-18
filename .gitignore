@@ -24,3 +24,5 @@ src/gtk/custom_signature_dialog.cmb
 src/gtk/smart_dialog.cmb
 
 docs/
+
+*.tar.gz
