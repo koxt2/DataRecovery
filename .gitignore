@@ -8,13 +8,15 @@ __pycache__/
 # Packaging directories (maintained separately)
 #aur/
 #obs/
-#debian/
+debian/
 #copr/
+#packaging/
+packaging/launchpad/Dockerfile
 
 # Ignore help files
 workflow.md
 new_workflow.md
-packaging/launchpad/Dockerfile
+
 
 # Ignore generated GTK UI files
 src/gtk/recovery_dialog.cmb
@@ -26,3 +28,5 @@ src/gtk/smart_dialog.cmb
 docs/
 
 *.tar.gz
+release.sh
+error

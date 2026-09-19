@@ -1,4 +1,6 @@
 # Changelog
+## [unreleased]
+- Fix Fedora rpmlint errors
 
 ## [v0.6.1] - 2026-09-18
 ### Fixed
