@@ -4,7 +4,9 @@
   <img src="data/screenshots/screenshot_01.png" width="600"/>
 </p>
 
-A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Recovers all files (not just deleted ones) from storage devices or disk images, organises them by file type, and optionally removes duplicates using rdfind.
+A GTK4/Libadwaita frontend for Photorec. \
+It uses ddrescue to create an image of the drive, uses Photorec to recover all files, optionally removes duplicates using rdfind, and organises them by file type. \
+You can also recover files from existing images, check the SMART report for your drives, choose which file types you want to recover, and add custom signatures for file types that are missing from the supported list.
 
 **Important**: Requires significant disk space as images are created first, then files recovered from those images.
 
@@ -68,7 +70,7 @@ A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Rec
 <details>
 <summary><b>Fedora</b></summary>
 
-- Fedora 42, Fedora 43
+- Fedora Rawhide, Fedora 45, Fedora 44 and Fedora 43
   ```bash
   sudo dnf copr enable koxt2/datarecovery
   sudo dnf install datarecovery
@@ -81,19 +83,19 @@ A GTK4/Libadwaita application for data recovery using ddrescue and PhotoRec. Rec
 
 - Debian 13 (Trixie)
   ```bash
-  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/datarecovery:/deb/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:datarecovery:deb.list
-  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:datarecovery:deb/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_datarecovery_deb.gpg > /dev/null
+  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/debian/Debian_13/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:debian.list
+  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:debian/Debian_13/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_debian.gpg > /dev/null
   sudo apt update
   sudo apt install datarecovery
   ```  
 - Debian 12 (Bookworm)
   ```bash
-  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/datarecovery:/deb/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:datarecovery:deb.list
-  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:datarecovery:deb/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_datarecovery_deb.gpg > /dev/null
+  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/debian/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:debian.list
+  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:debian/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_debian.gpg > /dev/null
   sudo apt update
   sudo apt install datarecovery
   ``` 
-  [View on OBS](https://build.opensuse.org/package/show/home:koxt2:datarecovery:deb/datarecovery)
+  [View on OBS](https://build.opensuse.org/package/show/home:koxt2:debian/datarecovery)
 </details>
 
 <details>
