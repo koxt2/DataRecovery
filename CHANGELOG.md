@@ -1,6 +1,11 @@
 # Changelog
+
 ## [unreleased]
+### Fixed
 - Fix Fedora rpmlint errors
+
+### Changed
+- Removed packaging directories
 
 ## [v0.6.1] - 2026-09-18
 ### Fixed

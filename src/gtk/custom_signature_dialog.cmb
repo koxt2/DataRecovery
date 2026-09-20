@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<!-- Created with Cambalache 0.96.3 -->
+<cambalache-project version="0.96.0" target_tk="gtk-4.0">
+  <ui template-class="CustomSignatureDialog" filename="custom_signature_dialog.ui" sha256="5a2db6d3361ee72ac73af44eab88ec9f47d99e8b6d34307498e7dabefda8d2e7"/>
+</cambalache-project>
