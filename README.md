@@ -101,13 +101,21 @@ You can also recover files from existing images, check the SMART report for your
 <details>
 <summary><b>Ubuntu</b></summary>
 
-- Ubuntu 24.04 LTS (Noble), 25.10 (Questing)
+- Ubuntu 26.04 (Resolute Racoon)
   ```bash
-  sudo add-apt-repository ppa:koxt2/datarecovery
+  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/ubuntu/xUbuntu_26.04/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:ubuntu.list
+  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:ubuntu/xUbuntu_26.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_ubuntu.gpg > /dev/null
   sudo apt update
   sudo apt install datarecovery
-  ```
-  [View on Launchpad](https://launchpad.net/~koxt2/+archive/ubuntu/datarecovery)
+  ```  
+- Ubuntu 24.04 (Noble Numbat)
+  ```bash
+  echo 'deb http://download.opensuse.org/repositories/home:/koxt2:/ubuntu/xUbuntu_24.04/ /' | sudo tee /etc/apt/sources.list.d/home:koxt2:ubuntu.list
+  curl -fsSL https://download.opensuse.org/repositories/home:koxt2:ubuntu/xUbuntu_24.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_koxt2_ubuntu.gpg > /dev/null
+  sudo apt update
+  sudo apt install datarecovery
+  ``` 
+  [View on OBS](https://build.opensuse.org/package/show/home:koxt2:ubuntu/datarecovery)
 </details>
 
 <details>
