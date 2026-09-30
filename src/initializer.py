@@ -48,7 +48,7 @@ class Initializer:
         
         # Remove and recreate working directory to ensure it's empty
         if os.path.exists(working_dir):
-            shutil.rmtree(working_dir)
+            shutil.rmtree(working_dir, ignore_errors=True)
         os.makedirs(working_dir, exist_ok=True)
         
         return working_dir
