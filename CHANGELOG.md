@@ -3,6 +3,7 @@
 ## [unreleased]
 ### Fixed
 - Fix Fedora rpmlint errors
+- Fixed leftover root owned directories after aborted recovery. They stop working directory cleanup on the next startup. Errors are temporarily ignored.
 
 ### Changed
 - Removed packaging directories
