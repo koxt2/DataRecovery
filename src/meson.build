@@ -59,6 +59,8 @@ datarecovery_sources = [
   'smart_data.py',
   'smart_dialog.py',
   'smart_dialog_columnview.py',
+  'mapfile.py',
+  'map_health.py',
   'utils.py',
 ]
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="MapHealthWindow" parent="AdwApplicationWindow">
+    <property name="default-height">640</property>
+    <property name="default-width">1000</property>
+    <property name="title">Drive Health</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child type="start">
+              <object class="GtkButton" id="open_button">
+                <property name="label">Open…</property>
+                <property name="icon-name">document-open-symbolic</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton" id="reload_button">
+                <property name="icon-name">view-refresh-symbolic</property>
+                <property name="tooltip-text">Reload</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="AdwToastOverlay" id="toast_overlay">
+            <property name="child">
+              <object class="MapHealthView" id="view"/>
+            </property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>
