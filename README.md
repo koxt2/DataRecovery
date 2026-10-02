@@ -5,7 +5,7 @@
 </p>
 
 A GTK4/Libadwaita frontend for Photorec. \
-It uses ddrescue to create an image of the drive, uses Photorec to recover all files, optionally removes duplicates using rdfind, and organises them by file type. \
+It uses ddrescue to create an image of the drive, Photorec to recover all files, optionally removes duplicates using rdfind, and organises them by file type. \
 You can also recover files from existing images, check the SMART report for your drives, choose which file types you want to recover, and add custom signatures for file types that are missing from the supported list.
 
 **Important**: Requires significant disk space as images are created first, then files recovered from those images.
@@ -192,10 +192,6 @@ sudo ninja -C builddir uninstall
 ## 🙏 Credits
 
 **Application Icon** - Derived from icons in the Adwaita icon theme, licensed under LGPL-3.0-or-later / CC-BY-SA-3.0 (<a href="https://gitlab.gnome.org/GNOME/adwaita-icon-theme" target="_blank">link</a>)
-
-**GTK4/Libadwaita** - Modern Linux desktop integration (<a href="https://gnome.pages.gitlab.gnome.org/libadwaita/" target="_blank">link</a>)
-
-**UDisks2** - Reliable device management interface (<a href="https://github.com/storaged-project/udisks" target="_blank">link</a>)
 
 **GNU ddrescue** - Core imaging technology (<a href="https://www.gnu.org/software/ddrescue/" target="_blank">link</a>)
 

@@ -1,21 +1,4 @@
-# file_types.py
-#
-# Copyright 2025 koxt2
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-#
+# Copyright 2025 Richard Potts
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 # Groups for organizing categories in the UI
@@ -67,7 +50,32 @@ FILE_TYPES = {
         "dvi": ["dvi"],
         "one": ["one"],
         "pdf": ["pdf"],
-        "txt": ["txt", "adr", "csv", "cue", "dif", "emlx", "fb2", "ics", "ldif", "ly", "lyx", "m3u", "mem", "priv", "pts", "ram", "slk", "smil", "stp", "tex", "ttd", "vcf", "wpl", "xmp"],
+        "txt": [
+            "txt",
+            "adr",
+            "csv",
+            "cue",
+            "dif",
+            "emlx",
+            "fb2",
+            "ics",
+            "ldif",
+            "ly",
+            "lyx",
+            "m3u",
+            "mem",
+            "priv",
+            "pts",
+            "ram",
+            "slk",
+            "smil",
+            "stp",
+            "tex",
+            "ttd",
+            "vcf",
+            "wpl",
+            "xmp",
+        ],
         "wpd": ["wpd"],
     },
     "Spreadsheets": {
@@ -243,7 +251,23 @@ FILE_TYPES = {
         "jks": ["jks"],
         "jsonlz4": ["jsonlz4", "json"],
         "pyc": ["pyc"],
-        "txt": ["bat", "c", "cls", "f", "h", "jad", "pl", "pli", "pm", "ppk", "py", "rb", "rsa", "sh", "vb"],
+        "txt": [
+            "bat",
+            "c",
+            "cls",
+            "f",
+            "h",
+            "jad",
+            "pl",
+            "pli",
+            "pm",
+            "ppk",
+            "py",
+            "rb",
+            "rsa",
+            "sh",
+            "vb",
+        ],
         "zip": ["apk", "jar", "xpi"],
     },
     "Publishing": {
@@ -333,7 +357,24 @@ FILE_TYPES = {
         "vfb": ["vfb"],
     },
     "Office Documents (ZIP-based)": {
-        "zip": ["celtx", "docx", "kmz", "mmap", "notebook", "odg", "odp", "ods", "odt", "pages", "pptx", "sxc", "sxd", "sxi", "sxw", "xlsx"],
+        "zip": [
+            "celtx",
+            "docx",
+            "kmz",
+            "mmap",
+            "notebook",
+            "odg",
+            "odp",
+            "ods",
+            "odt",
+            "pages",
+            "pptx",
+            "sxc",
+            "sxd",
+            "sxi",
+            "sxw",
+            "xlsx",
+        ],
     },
     "Others": {
         "ahn": ["ahn"],
@@ -427,7 +468,25 @@ FILE_TYPES = {
         "tg": ["tg"],
         "tph": ["tph"],
         "tpl": ["tpl"],
-        "txt": ["dc", "dp", "dsa", "emka", "ers", "fst", "gcs", "gsb", "hdr", "imm", "mcf", "mdl", "msf", "prproj", "pub", "qgs", "rpp"],
+        "txt": [
+            "dc",
+            "dp",
+            "dsa",
+            "emka",
+            "ers",
+            "fst",
+            "gcs",
+            "gsb",
+            "hdr",
+            "imm",
+            "mcf",
+            "mdl",
+            "msf",
+            "prproj",
+            "pub",
+            "qgs",
+            "rpp",
+        ],
         "tz": ["tz"],
         "vdj": ["vdj"],
         "vib": ["vib"],
@@ -446,5 +505,5 @@ FILE_TYPES = {
         "z2d": ["z2d"],
         "zcode": ["zcode"],
         "zpr": ["zpr"],
-    }
+    },
 }

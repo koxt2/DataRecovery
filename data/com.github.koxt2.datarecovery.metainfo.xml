@@ -61,12 +61,12 @@
   <url type="vcs-browser">https://github.com/koxt2/DataRecovery</url>
   
   <developer id="com.github.koxt2">
-    <name>koxt2</name>
+    <name>Richard Potts</name>
   </developer>
   
   <categories>
     <category>System</category>
-    <category>Utility</category>
+    <category>Filesystems</category>
   </categories>
   
   <keywords>

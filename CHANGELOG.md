@@ -8,6 +8,7 @@
 ### Changed
 - Removed packaging directories
 - Moved Ubuntu package to OBS from Launchpad
+- Formatting corrections
 
 ## [v0.6.1] - 2026-09-18
 ### Fixed

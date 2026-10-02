@@ -4,3 +4,7 @@ builddir/
 # Python cache
 __pycache__/
 *.pyc
+
+# Ruff cache
+.ruff_cache/
+pyproject.toml
