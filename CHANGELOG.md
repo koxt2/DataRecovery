@@ -1,6 +1,10 @@
 # Changelog
 
 ## [unreleased]
+### Added
+- Option to view a graphical representation of map file after a scan has completed
+- View graphical representation of map file (if one exists) when an image is chosen
+
 ### Fixed
 - Fix Fedora rpmlint errors
 - Fixed leftover root owned directories after aborted recovery. They stop working directory cleanup on the next startup. Errors are temporarily ignored.
