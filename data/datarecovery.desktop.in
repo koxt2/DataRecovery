@@ -6,6 +6,6 @@ Exec=datarecovery
 Icon=com.github.koxt2.datarecovery
 Terminal=false
 Type=Application
-Categories=Filesystems;System;
+Categories=Utility;System;
 Keywords=data;recovery;ddrescue;photorec;rescue;forensics;
 StartupNotify=true
