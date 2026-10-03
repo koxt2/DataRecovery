@@ -9,10 +9,11 @@ import traceback
 from gi.repository import Adw, GLib
 
 from .block_devices import check_sufficient_space, get_image_size
-from .config import RECOVERED_FILES_DIR
+from .config import RECOVERED_FILES_DIR, RECOVERY_DATA_FOLDER
 from .duplicates import DuplicateRemover
 from .file_operations import FileOperations
 from .imager import DeviceImager
+from .map_health import MapHealth
 from .recover import DeviceRecovery
 from .utils import format_bytes
 
@@ -72,6 +73,36 @@ class RecoveryWorkflow:
             daemon=True,
         )
         thread.start()
+
+    def _offer_health_view(self, mapfile_path, saved):
+        body = (
+            "ddrescue recorded which parts of the drive could be read. "
+            "Do you want to view a graphical map of the scan to see how healthy the drive is."
+        )
+        if saved:
+            body += (
+                f"\n\nThe map file is saved in the “{RECOVERY_DATA_FOLDER}” folder, "
+                "so you can analyse it again later."
+            )
+        else:
+            body += (
+                "\n\nThe map file is not kept unless you choose to save the disk image, "
+                "so this is your only chance to view it."
+            )
+        dialog = Adw.AlertDialog.new("View Drive Health?", body)
+        dialog.add_response("no", "No")
+        dialog.add_response("yes", "View")
+        dialog.set_response_appearance("yes", Adw.ResponseAppearance.SUGGESTED)
+        dialog.set_default_response("yes")
+        dialog.set_close_response("no")
+
+        def on_response(_dialog, response):
+            if response == "yes":
+                MapHealth(parent=self.window)(mapfile_path)
+
+        dialog.connect("response", on_response)
+        dialog.present(self.window)
+        return False
 
     def _create_cancel_callback(self):
         def cancel_recovery():
@@ -195,10 +226,17 @@ class RecoveryWorkflow:
             GLib.idle_add(self.recovery_dialog.update_step_status, "organize", "complete")
 
             # Step 5: Move images if requested
+            mapfile_path = self.device_imager.mapfile_path if not is_image_file else None
+            saved = False
             if destination_path and user_settings.get("save_image", False):
                 GLib.idle_add(self.recovery_dialog.update_step_status, "save_images", "active")
                 GLib.idle_add(self.recovery_dialog.update_status, "Saving disk images")
                 self.file_operations.move_images_to_destination(self.working_dir, destination_path)
+                if mapfile_path:
+                    saved = True
+                    mapfile_path = os.path.join(
+                        destination_path, RECOVERY_DATA_FOLDER, os.path.basename(mapfile_path)
+                    )
                 GLib.idle_add(self.recovery_dialog.update_step_status, "save_images", "complete")
 
             # Step 6: Move logs (always done when destination is set)
@@ -211,6 +249,9 @@ class RecoveryWorkflow:
             self.logger.info("Recovery completed successfully")
             GLib.idle_add(self.recovery_dialog.update_status, "Recovery complete")
             GLib.idle_add(self.recovery_dialog.mark_complete)
+
+            if mapfile_path and os.path.isfile(mapfile_path):
+                GLib.idle_add(self._offer_health_view, mapfile_path, saved)
 
         except Exception as e:
             self.logger.error(f"Recovery failed with exception: {e}")

@@ -6,6 +6,8 @@ import os
 from gi.repository import GObject, Gtk
 
 from . import settings, smart_data
+from .map_health import MapHealth
+from .mapfile import find_mapfile
 from .partition_guids import PARTITION_TYPE_GUIDS
 from .smart_dialog import SmartDialog
 from .utils import format_size
@@ -25,6 +27,7 @@ class PartitionRow(GObject.Object):
         mount_path=None,
         smart_status="unavailable",
         is_whole_device=False,
+        map_path=None,
     ):
         super().__init__()
         self._mounted = mounted
@@ -36,6 +39,7 @@ class PartitionRow(GObject.Object):
         self._mount_path = mount_path
         self._smart_status = smart_status
         self._is_whole_device = is_whole_device
+        self._map_path = map_path
 
     @GObject.Property(type=bool, default=False)
     def mounted(self):
@@ -72,6 +76,10 @@ class PartitionRow(GObject.Object):
     @GObject.Property(type=bool, default=False)
     def is_whole_device(self):
         return self._is_whole_device
+
+    @GObject.Property(type=str)
+    def map_path(self):
+        return self._map_path or ""
 
 
 class DeviceColumnView:
@@ -148,6 +156,21 @@ class DeviceColumnView:
         status = row.smart_status
         is_device = row.is_whole_device
 
+        # Disconnect the button so the same handler is not connected multiple times
+        if hasattr(button, "_health_handler_id"):
+            button.disconnect(button._health_handler_id)
+            del button._health_handler_id
+
+        # Image files with a ddrescue map file beside them open the map view
+        if row.map_path:
+            icon.set_from_icon_name("drive-harddisk-symbolic")
+            button.set_tooltip_text("Click to view the ddrescue map file")
+            button.set_sensitive(True)
+            button._health_handler_id = button.connect(
+                "clicked", self._on_map_clicked, row.map_path
+            )
+            return
+
         # Only show SMART data for whole devices, not partitions
         if not is_device:
             icon.set_from_icon_name("")
@@ -168,18 +191,16 @@ class DeviceColumnView:
             icon.set_from_icon_name("dialog-question-symbolic")
             button.set_tooltip_text("SMART data not available")
 
-        # Disconnect the button so the same handler is not connected multiple times
-        if hasattr(button, "_health_handler_id"):
-            button.disconnect(button._health_handler_id)
-
-        handler_id = button.connect("clicked", self._on_health_clicked, row.path)
-        button._health_handler_id = handler_id
+        button._health_handler_id = button.connect("clicked", self._on_health_clicked, row.path)
 
         button.set_sensitive(status != "unavailable")
 
     def _on_health_clicked(self, button, device_path):
         dialog = SmartDialog(self.window, device_path)
         dialog.present(self.window)
+
+    def _on_map_clicked(self, button, map_path):
+        MapHealth(parent=self.window)(map_path)
 
     def _set_mount_tooltip(self, widget, row):
         if getattr(row, "mounted", False):
@@ -264,6 +285,7 @@ class DeviceColumnView:
             label=os.path.basename(image_path),
             part_type="IMAGE FILE",
             mount_path=None,
+            map_path=find_mapfile(image_path),
         )
         self.window.columnview_liststore.append(row)
 

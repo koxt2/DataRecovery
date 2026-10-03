@@ -25,6 +25,7 @@ class DeviceImager:
         self.imager_logger = logging.getLogger("imager_logger")
         self.current_process = None
         self.cancelled = False
+        self.mapfile_path = None
 
     def run_imager(self, device_path, image_path, mapfile_path):
         self.cancelled = False
@@ -117,6 +118,7 @@ class DeviceImager:
 
         self.logger.info(f"Device: {device_path}")
         self.logger.info(f"Image: {image_path}")
+        self.mapfile_path = mapfile_path
         self.logger.info(f"Mapfile: {mapfile_path}")
         self.logger.info("Running ddrescue")
 

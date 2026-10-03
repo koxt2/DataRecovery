@@ -5,6 +5,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 
+from .config import MAP_FILE_EXTENSION
+
 
 class MapFileError(Exception):
     pass
@@ -31,13 +33,6 @@ class Status(Enum):
 # Order in which a mixed cell is reported: the "worst" status wins.
 SEVERITY = [Status.BAD, Status.NON_SCRAPED, Status.NON_TRIMMED, Status.NON_TRIED, Status.FINISHED]
 
-PASS_NAMES = {
-    "?": "Non-tried", "*": "Copying", "/": "Trimming", "-": "Scraping",
-    "F": "Filling", "G": "Generating", "+": "Finished",
-}
-PASS_NAMES.update({"1": "Copying", "2": "Trimming", "3": "Sweeping", "4": "Scraping"})
-
-
 @dataclass
 class Block:
     pos: int
@@ -53,10 +48,6 @@ class Block:
 class MapFile:
     path: str | None = None
     blocks: list[Block] = field(default_factory=list)
-    current_pos: int = 0
-    current_status: str = "?"
-    current_pass: int | None = None
-    comments: list[str] = field(default_factory=list)
     _starts: list[int] = field(default_factory=list, repr=False)
 
     @property
@@ -71,24 +62,6 @@ class MapFile:
     def total(self) -> int:
         return self.end - self.start
 
-    @property
-    def command_line(self) -> str | None:
-        for c in self.comments:
-            if c.lower().startswith("command line:"):
-                return c.split(":", 1)[1].strip()
-        return None
-
-    @property
-    def version(self) -> str | None:
-        for c in self.comments:
-            if "GNU ddrescue version" in c:
-                return c.rsplit("version", 1)[1].strip()
-        return None
-
-    @property
-    def phase(self) -> str:
-        return PASS_NAMES.get(self.current_status, self.current_status)
-
     def totals(self) -> dict[Status, int]:
         out = {s: 0 for s in Status}
         for b in self.blocks:
@@ -100,14 +73,6 @@ class MapFile:
         for b in self.blocks:
             out[b.status] += 1
         return out
-
-    def block_at(self, offset: int) -> Block | None:
-        if not self._starts:
-            return None
-        i = bisect.bisect_right(self._starts, offset) - 1
-        if i >= 0 and self.blocks[i].pos <= offset < self.blocks[i].end:
-            return self.blocks[i]
-        return None
 
     def range_totals(self, lo: int, hi: int) -> dict[Status, int]:
         """Bytes of each status within [lo, hi)."""
@@ -123,14 +88,16 @@ class MapFile:
             i += 1
         return out
 
-    def grid(self, cells: int) -> list[dict[Status, int]]:
-        """Split the map into `cells` equal spans and return per-status bytes for each."""
+    def grid(self, cells: int, first: int = 0, count: int | None = None) -> list[dict[Status, int]]:
+        """Split the map into `cells` equal spans; return per-status bytes for `count` of them
+        starting at index `first`."""
         if cells <= 0 or self.total <= 0:
             return []
+        last = cells if count is None else min(cells, first + count)
         span = self.total / cells
         return [
             self.range_totals(self.start + int(i * span), self.start + int((i + 1) * span))
-            for i in range(cells)
+            for i in range(first, last)
         ]
 
 
@@ -142,15 +109,11 @@ def parse_mapfile(text: str, path: str | None = None) -> MapFile:
         if not line:
             continue
         if line.startswith("#"):
-            mf.comments.append(line.lstrip("#").strip())
             continue
         parts = line.split()
         try:
             if not status_seen:
-                mf.current_pos = int(parts[0], 0)
-                mf.current_status = parts[1]
-                if len(parts) > 2:
-                    mf.current_pass = int(parts[2])
+                int(parts[0], 0)  # status line: validated, not used
                 status_seen = True
                 continue
             pos, size = int(parts[0], 0), int(parts[1], 0)
@@ -178,6 +141,17 @@ def load_mapfile(path: str | Path) -> MapFile:
     except OSError as e:
         raise MapFileError(str(e)) from e
     return parse_mapfile(text, str(p))
+
+
+def find_mapfile(image_path: str | Path) -> str | None:
+    """Look beside an image for its ddrescue map file."""
+    p = Path(image_path)
+    candidates = [
+        p.with_name(f"{p.stem}_mapfile{MAP_FILE_EXTENSION}"),
+        p.with_suffix(MAP_FILE_EXTENSION),
+        p.with_name(p.name + MAP_FILE_EXTENSION),
+    ]
+    return next((str(c) for c in candidates if c.is_file()), None)
 
 
 def format_size(n: float) -> str:
