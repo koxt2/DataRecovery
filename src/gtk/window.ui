@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 1.0 -->
+<!-- Created with Cambalache 1.0.3 -->
 <interface>
   <!-- interface-name window.ui -->
   <requires lib="Adw" version="1.0"/>
@@ -59,7 +59,7 @@
                           <object class="GtkScrolledWindow">
                             <property name="hexpand">True</property>
                             <property name="vexpand">True</property>
-                            <property name="window-placement">bottom-left</property>
+                            <property name="window-placement">top-right</property>
                             <child>
                               <object class="GtkColumnView">
                                 <property name="css-classes">card</property>
@@ -269,8 +269,8 @@
         </child>
       </object>
     </property>
-    <property name="default-height">800</property>
-    <property name="default-width">800</property>
+    <property name="default-height">850</property>
+    <property name="default-width">850</property>
     <property name="title" translatable="yes">Data Recovery</property>
   </template>
   <menu id="primary_menu">

@@ -18,6 +18,8 @@ from .mapfile import (  # noqa: E402
 )
 
 EMPTY_RGB = (0x34, 0x34, 0x34)
+CELL_SIZE = 8  # px per cell
+GRID_COLS, GRID_ROWS = 32, 65  # fixed layout: the grid never depends on the window size
 GAP = 1
 SECTOR = 512
 
@@ -26,14 +28,11 @@ def _rgb(c):
     return c[0] / 255, c[1] / 255, c[2] / 255
 
 
-def _cell_rgb(totals, blend=False):
+def _cell_rgb(totals):
     present = [s for s in SEVERITY if totals.get(s)]
     if not present:
         return _rgb(EMPTY_RGB)
-    if not blend:
-        return _rgb(present[0].rgb)
-    tot = sum(totals[s] for s in present)
-    return tuple(sum(totals[s] * s.rgb[i] for s in present) / tot / 255 for i in range(3))
+    return _rgb(present[0].rgb)
 
 
 class MapGrid(Gtk.DrawingArea):
@@ -52,8 +51,7 @@ class MapGrid(Gtk.DrawingArea):
     def __init__(self):
         super().__init__()
         self.map: MapFile | None = None
-        self.cell_size = 16
-        self.blend = False
+        self.cell_size = CELL_SIZE
         self.zoom = 1
         self.position = 0.0  # 0..1 through the scrollable range
         self.cols = self.rows = 0
@@ -76,15 +74,6 @@ class MapGrid(Gtk.DrawingArea):
         self.queue_draw()
         self.emit("view-changed")
 
-    def set_cell_size(self, px: int):
-        self.cell_size = max(2, int(px))
-        self._key = None
-        self.queue_draw()
-
-    def set_blend(self, blend: bool):
-        self.blend = blend
-        self.queue_draw()
-
     def set_zoom(self, zoom: int):
         zoom = max(1, int(zoom))
         if zoom == self.zoom:
@@ -95,14 +84,14 @@ class MapGrid(Gtk.DrawingArea):
 
     def max_zoom(self) -> int:
         """Zoom at which one cell covers a single 512-byte sector."""
-        if not self.map or not self.cols:
+        if not self.map:
             return 1
-        return max(1, int(self.map.total // (self.cols * self.rows * SECTOR)))
+        return max(1, int(self.map.total // (GRID_COLS * GRID_ROWS * SECTOR)))
 
     def bytes_per_cell(self) -> float:
-        if not self.map or not self.cols:
+        if not self.map:
             return 0.0
-        return self.map.total / (self.cols * self.rows * self.zoom)
+        return self.map.total / (GRID_COLS * GRID_ROWS * self.zoom)
 
     def view_top(self) -> float:
         """Top of the visible window as a fraction (0..1) of the whole map."""
@@ -141,7 +130,7 @@ class MapGrid(Gtk.DrawingArea):
         return self._cells[idx] if 0 <= idx < len(self._cells) else {}
 
     def _layout(self, w, h):
-        cols, rows = max(1, w // self.cell_size), max(1, h // self.cell_size)
+        cols, rows = GRID_COLS, GRID_ROWS
         if self.map and cols * rows * self.zoom > self.map.total:
             cols = rows = 1
         first_row = round(self.position * rows * (self.zoom - 1))
@@ -163,7 +152,7 @@ class MapGrid(Gtk.DrawingArea):
         ox, oy = (w - self.cols * cs) // 2, (h - self.rows * cs) // 2
         for i, totals in enumerate(self._cells):
             x, y = ox + (i % self.cols) * cs, oy + (i // self.cols) * cs
-            cr.set_source_rgb(*_cell_rgb(totals, self.blend))
+            cr.set_source_rgb(*_cell_rgb(totals))
             cr.rectangle(x, y, cs - GAP, cs - GAP)
             cr.fill()
         if self.hover >= 0:
@@ -196,15 +185,15 @@ class MapOverview(Gtk.DrawingArea):
     """Thumbnail of the whole map with a box showing what the grid is zoomed in on.
     Click or drag to move the view."""
 
-    COLS, ROWS = 48, 30
+    COLS, ROWS = 1, GRID_ROWS * 4
 
     def __init__(self, grid: MapGrid):
         super().__init__()
         self.grid = grid
         self._cells = []
         self._cells_for = None
-        self.set_content_width(192)
-        self.set_content_height(120)
+        self.set_content_width(24)
+        self.set_content_height(GRID_ROWS * CELL_SIZE)
         self.set_draw_func(self._draw)
         grid.connect("view-changed", lambda *_: self.queue_draw())
         drag = Gtk.GestureDrag()
@@ -271,7 +260,7 @@ class StatusSwatch(Gtk.DrawingArea):
 
 
 @Gtk.Template(resource_path="/datarecovery/gtk/map_health_window.ui")
-class MapHealthWindow(Adw.ApplicationWindow):
+class MapHealthWindow(Adw.Dialog):
     """Window showing the grid, legend and statistics for one ddrescue map file."""
 
     __gtype_name__ = "MapHealthWindow"
@@ -281,8 +270,6 @@ class MapHealthWindow(Adw.ApplicationWindow):
     overview_holder = Gtk.Template.Child()
     zoom_scale = Gtk.Template.Child()
     zoom_label = Gtk.Template.Child()
-    cell_size_scale = Gtk.Template.Child()
-    blend_switch = Gtk.Template.Child()
     hover_row = Gtk.Template.Child()
     bad_value = Gtk.Template.Child()
     non_scraped_value = Gtk.Template.Child()
@@ -324,25 +311,21 @@ class MapHealthWindow(Adw.ApplicationWindow):
             "file": self.file_row,
         }
         self.grid = MapGrid()
-        self.grid.set_hexpand(True)
-        self.grid.set_vexpand(True)
-        self.grid.set_size_request(240, 180)
+        self.grid.set_content_width(GRID_COLS * CELL_SIZE)
+        self.grid.set_content_height(GRID_ROWS * CELL_SIZE)
         self.grid_holder.append(self.grid)
         self.overview_holder.append(MapOverview(self.grid))
         self.zoom_scale.connect("value-changed", self._on_zoom_changed)
+        wheel = Gtk.EventControllerScroll(flags=Gtk.EventControllerScrollFlags.VERTICAL)
+        wheel.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+        wheel.connect("scroll", self._on_zoom_wheel)
+        self.zoom_scale.add_controller(wheel)
         self.grid.connect("view-changed", lambda *_: self._update_zoom_label())
         for status, holder in self._swatches.items():
             swatch = StatusSwatch()
             swatch.set_rgb(status.rgb)
             holder.append(swatch)
         self.grid.connect("cell-hover", self._on_hover)
-        self.cell_size_scale.connect(
-            "value-changed", lambda scale: self.grid.set_cell_size(scale.get_value())
-        )
-        self.blend_switch.connect(
-            "notify::active",
-            lambda switch, _pspec: self.grid.set_blend(switch.get_active()),
-        )
         try:
             self.load(path)
         except MapFileError as e:
@@ -355,7 +338,13 @@ class MapHealthWindow(Adw.ApplicationWindow):
         self.map = mf
         self.grid.set_map(mf)
         self._update_stats()
+        self._update_zoom_label()
         self.set_title(f"Drive Health — {os.path.basename(path)}")
+
+    def _on_zoom_wheel(self, _ctl, _dx, dy):
+        adj = self.zoom_scale.get_adjustment()
+        self.zoom_scale.set_value(self.zoom_scale.get_value() - dy * adj.get_step_increment())
+        return True
 
     def _on_zoom_changed(self, scale):
         # The slider is logarithmic: 0 is the whole map, 100 is one sector per cell.
@@ -406,15 +395,10 @@ class MapHealth:
         MapHealth(parent=main_window)("/path/to/rescue.map")
     """
 
-    def __init__(self, parent: Gtk.Window | None = None, modal: bool = False):
+    def __init__(self, parent: Gtk.Widget | None = None):
         self.parent = parent
-        self.modal = modal
 
     def __call__(self, path: str) -> MapHealthWindow:
-        app = self.parent.get_application() if self.parent else None
-        win = MapHealthWindow(path=path, application=app)
-        if self.parent:
-            win.set_transient_for(self.parent)
-            win.set_modal(self.modal)
-        win.present()
+        win = MapHealthWindow(path=path)
+        win.present(self.parent)
         return win

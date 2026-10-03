@@ -5,124 +5,94 @@
   <requires lib="Adw" version="1.0"/>
   <requires lib="gtk" version="4.0"/>
   <requires lib="libadwaita" version="1.7"/>
-  <template class="MapHealthWindow" parent="AdwApplicationWindow">
-    <property name="content">
+  <template class="MapHealthWindow" parent="AdwDialog">
+    <property name="child">
       <object class="AdwToolbarView">
         <property name="content">
           <object class="AdwToastOverlay" id="toast_overlay">
             <property name="child">
               <object class="GtkBox">
-                <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkBox">
-                    <property name="hexpand">true</property>
+                    <property name="margin-bottom">10</property>
+                    <property name="margin-end">10</property>
+                    <property name="margin-start">10</property>
+                    <property name="margin-top">10</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkFrame">
-                        <property name="child">
-                          <object class="GtkBox" id="grid_holder">
-                            <property name="height-request">180</property>
-                            <property name="hexpand">true</property>
-                            <property name="margin-bottom">5</property>
-                            <property name="margin-end">5</property>
-                            <property name="margin-start">5</property>
-                            <property name="margin-top">5</property>
-                            <property name="vexpand">true</property>
-                            <property name="width-request">240</property>
-                          </object>
-                        </property>
-                        <property name="margin-bottom">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="margin-start">10</property>
-                        <property name="margin-top">10</property>
-                      </object>
-                    </child>
-                    <child>
                       <object class="GtkBox">
-                        <property name="margin-bottom">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="margin-start">10</property>
-                        <property name="spacing">12</property>
+                        <property name="halign">center</property>
+                        <property name="spacing">10</property>
+                        <property name="vexpand">True</property>
                         <child>
-                          <object class="GtkLabel">
-                            <property name="label">Cell size</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkScale" id="cell_size_scale">
-                            <property name="adjustment">
-                              <object class="GtkAdjustment">
-                                <property name="lower">8</property>
-                                <property name="step-increment">1</property>
-                                <property name="upper">48</property>
-                                <property name="value">16</property>
+                          <object class="GtkFrame">
+                            <property name="child">
+                              <object class="GtkBox" id="grid_holder">
+                                <property name="hexpand">false</property>
+                                <property name="margin-bottom">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-start">5</property>
+                                <property name="margin-top">5</property>
                               </object>
                             </property>
-                            <property name="draw-value">false</property>
-                            <property name="hexpand">true</property>
-                            <property name="orientation">horizontal</property>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel">
-                            <property name="label">Blend colours</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkSwitch" id="blend_switch">
-                            <property name="tooltip-text">Off: a cell shows its worst status. On: colours are averaged by size.</property>
-                            <property name="valign">center</property>
+                          <object class="GtkFrame">
+                            <property name="child">
+                              <object class="GtkBox" id="overview_holder">
+                                <property name="margin-bottom">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-start">5</property>
+                                <property name="margin-top">5</property>
+                              </object>
+                            </property>
                           </object>
                         </child>
                       </object>
                     </child>
                     <child>
                       <object class="GtkBox">
-                        <property name="margin-bottom">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="margin-start">10</property>
+                        <property name="orientation">vertical</property>
                         <property name="spacing">12</property>
                         <child>
-                          <object class="GtkLabel">
-                            <property name="label">Zoom</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkScale" id="zoom_scale">
-                            <property name="adjustment">
-                              <object class="GtkAdjustment">
-                                <property name="lower">0</property>
-                                <property name="step-increment">2</property>
-                                <property name="upper">100</property>
-                                <property name="value">0</property>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label">Zoom</property>
                               </object>
-                            </property>
-                            <property name="draw-value">false</property>
-                            <property name="hexpand">true</property>
-                            <property name="orientation">horizontal</property>
-                            <property name="tooltip-text">Zoom in on part of the map, down to one 512-byte sector per cell. Scroll the grid or use the overview to move around.</property>
+                            </child>
+                            <child>
+                              <object class="GtkScale" id="zoom_scale">
+                                <property name="adjustment">
+                                  <object class="GtkAdjustment">
+                                    <property name="lower">0</property>
+                                    <property name="step-increment">2</property>
+                                    <property name="upper">100</property>
+                                    <property name="value">0</property>
+                                  </object>
+                                </property>
+                                <property name="draw-value">false</property>
+                                <property name="hexpand">true</property>
+                                <property name="orientation">horizontal</property>
+                              </object>
+                            </child>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="zoom_label">
-                            <property name="css-classes">dim-label,numeric</property>
-                            <property name="width-chars">16</property>
-                            <property name="xalign">1</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="AdwPreferencesGroup">
-                        <property name="margin-bottom">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="margin-start">10</property>
-                        <child>
-                          <object class="AdwActionRow" id="hover_row">
-                            <property name="css-classes">property</property>
-                            <property name="subtitle"> </property>
-                            <property name="subtitle-lines">6</property>
-                            <property name="title">Hover over the grid</property>
+                          <object class="GtkBox">
+                            <property name="halign">start</property>
+                            <child>
+                              <object class="GtkLabel" id="zoom_label">
+                                <property name="css-classes">dim-label,numeric</property>
+                                <property name="ellipsize">end</property>
+                                <property name="hexpand">True</property>
+                                <property name="label">
+</property>
+                                <property name="width-chars">0</property>
+                                <property name="xalign">1</property>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -138,20 +108,12 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">10</property>
                     <child>
-                      <object class="GtkFrame">
-                        <property name="child">
-                          <object class="GtkBox" id="overview_holder"/>
-                        </property>
-                        <property name="halign">center</property>
-                      </object>
-                    </child>
-                    <child>
                       <object class="GtkBox">
-                        <property name="homogeneous">True</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">12</property>
                         <child>
                           <object class="AdwPreferencesGroup">
+                            <property name="valign">center</property>
                             <child>
                               <object class="AdwActionRow">
                                 <property name="subtitle">Not yet attempted</property>
@@ -231,6 +193,7 @@
                         </child>
                         <child>
                           <object class="AdwPreferencesGroup">
+                            <property name="valign">center</property>
                             <child>
                               <object class="AdwActionRow" id="size_row">
                                 <property name="css-classes">property</property>
@@ -262,6 +225,21 @@
                             </child>
                           </object>
                         </child>
+                        <child>
+                          <object class="AdwPreferencesGroup">
+                            <property name="vexpand">True</property>
+                            <child>
+                              <object class="AdwActionRow" id="hover_row">
+                                <property name="css-classes">property</property>
+                                <property name="subtitle"> </property>
+                                <property name="subtitle-lines">6</property>
+                                <property name="title">Hover over the grid</property>
+                                <property name="valign">start</property>
+                                <property name="vexpand">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
@@ -275,8 +253,9 @@
         </child>
       </object>
     </property>
-    <property name="default-height">640</property>
-    <property name="default-width">1000</property>
+    <property name="content-height">650</property>
+    <property name="content-width">760</property>
     <property name="title">Drive Health</property>
+    <property name="vexpand">True</property>
   </template>
 </interface>
