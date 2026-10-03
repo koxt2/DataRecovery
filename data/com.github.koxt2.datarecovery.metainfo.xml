@@ -84,6 +84,14 @@
   </provides>
   
   <releases>
+    <release version="0.6.1" date="2026-09-18">
+      <description>
+        <p>Release v0.6.1</p>
+        <ul>
+          <li>Bogus dates in changelogs</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.6.0" date="2026-09-16">
       <description>
         <p>Harden pkexec-helper and improve compatibility with Linux distros- #2</p>
@@ -96,11 +104,9 @@
         </ul>
       </description>
     </release>
-
-
     <release version="0.5.0" date="2026-04-28">
       <description>
-        <p>Meteinfo update</p>
+        <p>Metainfo update</p>
         <ul>
           <li>Progress bar updates while recovering data and organising files<li>
           <li>New `utils.py` module with shared `format_bytes` and `format_size` functions<li>
@@ -128,7 +134,7 @@
   <releases>
     <release version="0.4.1" date="2025-12-27">
       <description>
-        <p>Meteinfo update</p>
+        <p>Metainfo update</p>
         <ul>
           <li>Updated screenshots</li>
         </ul>
