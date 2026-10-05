@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+### Changed
+- metainfo file update
+
 ## [v0.7.0] - 2026-10-04
 ### Added
 - Option to view a graphical representation of map file after a scan has completed

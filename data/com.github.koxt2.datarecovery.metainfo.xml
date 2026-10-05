@@ -84,6 +84,20 @@
   </provides>
   
   <releases>
+    <release version="0.7.0" date="2026-10-04">
+      <description>
+        <p>Mapfile visualization and recovery improvements</p>
+        <ul>
+          <li>Added a graphical mapfile view after a scan completes</li>
+          <li>Mapfile visualization is also available when an image is selected, if a mapfile exists</li>
+          <li>Fixed Fedora rpmlint errors</li>
+          <li>Fixed leftover root-owned directories after an aborted recovery that could block cleanup on the next startup</li>
+          <li>Removed packaging directories</li>
+          <li>Moved Ubuntu packaging to OBS from Launchpad</li>
+          <li>Corrected formatting</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.6.1" date="2026-09-18">
       <description>
         <p>Release v0.6.1</p>
@@ -108,30 +122,29 @@
       <description>
         <p>Metainfo update</p>
         <ul>
-          <li>Progress bar updates while recovering data and organising files<li>
-          <li>New `utils.py` module with shared `format_bytes` and `format_size` functions<li>
-          <li>Disk space check now also runs when recovering from an image file (previously only ran for physical devices)<li>
-          <li>Logs are now always generated and saved to destination (no longer optional)<li>
-          <li>This was needed so that photorec progress can be displayed<li>
-          <li>Application no longer re-initialises when brought back to the foreground (subsequent activations now just re-present the existing window)<li>
-          <li>`MountedPartitionChecker` no longer takes an unused `device_dropdown` parameter<li>
-          <li>`PartitionRow.type` property renamed to `part_type` to avoid shadowing the Python built-in<li>
-          <li>README update<li>
-          <li>Duplicate `/d` flag in PhotoRec command that would confuse file output location<li>
-          <li>Bare `except:` clauses replaced with `except OSError:` in three places to avoid swallowing unexpected exceptions<li>
-          <li>Redundant module-level loggers in `imager.py` removed (class already creates its own)<li>
-          <li>Duplicate `universal_newlines=True` kwarg removed from `subprocess.Popen` call in `imager.py` (`text=True` is the same thing)<li>
-          <li>Unused `DDRESCUE_RETRY_PASSES` import removed from `imager.py`<li>
-          <li>Unused `os` import removed from `block_devices.py`<li>
-          <li>Silently-swallowed file dialog exception in `window.py` is now logged<li>
-          <li>Duplicate `_format_bytes` method removed from `DeviceImager` and `RecoveryWorkflow`; both now use `utils.format_bytes`<li>
-          <li>Wrong file name in `initializer.py` header comment (`main.py` → `initializer.py`)<li>
-          <li>Removed redundant internal `GLib.idle_add` wrapping in `RecoveryProgressDialog` methods; callers already schedule on the main thread<li>
+          <li>Progress bar updates while recovering data and organising files</li>
+          <li>New `utils.py` module with shared `format_bytes` and `format_size` functions</li>
+          <li>Disk space check now also runs when recovering from an image file (previously only ran for physical devices)</li>
+          <li>Logs are now always generated and saved to destination (no longer optional)</li>
+          <li>This was needed so that photorec progress can be displayed</li>
+          <li>Application no longer re-initialises when brought back to the foreground (subsequent activations now just re-present the existing window)</li>
+          <li>`MountedPartitionChecker` no longer takes an unused `device_dropdown` parameter</li>
+          <li>`PartitionRow.type` property renamed to `part_type` to avoid shadowing the Python built-in</li>
+          <li>README update</li>
+          <li>Duplicate `/d` flag in PhotoRec command that would confuse file output location</li>
+          <li>Bare `except:` clauses replaced with `except OSError:` in three places to avoid swallowing unexpected exceptions</li>
+          <li>Redundant module-level loggers in `imager.py` removed (class already creates its own)</li>
+          <li>Duplicate `universal_newlines=True` kwarg removed from `subprocess.Popen` call in `imager.py` (`text=True` is the same thing)</li>
+          <li>Unused `DDRESCUE_RETRY_PASSES` import removed from `imager.py`</li>
+          <li>Unused `os` import removed from `block_devices.py`</li>
+          <li>Silently-swallowed file dialog exception in `window.py` is now logged</li>
+          <li>Duplicate `_format_bytes` method removed from `DeviceImager` and `RecoveryWorkflow`; both now use `utils.format_bytes`</li>
+          <li>Wrong file name in `initializer.py` header comment (`main.py` → `initializer.py`)</li>
+          <li>Removed redundant internal `GLib.idle_add` wrapping in `RecoveryProgressDialog` methods; callers already schedule on the main thread</li>
           <li>Updated screenshots</li>
         </ul>
       </description>
     </release>
-  <releases>
     <release version="0.4.1" date="2025-12-27">
       <description>
         <p>Metainfo update</p>
