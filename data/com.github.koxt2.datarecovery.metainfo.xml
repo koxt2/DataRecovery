@@ -84,6 +84,14 @@
   </provides>
   
   <releases>
+    <release version="0.7.1" date="2026-10-05">
+      <description>
+        <p>Release v0.7.1</p>
+        <ul>
+          <li>metainfo file update</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.7.0" date="2026-10-04">
       <description>
         <p>Mapfile visualization and recovery improvements</p>
