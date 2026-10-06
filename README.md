@@ -48,7 +48,6 @@ You can also recover files from existing images, check the SMART report for your
 
 - Tumbleweed  
   ```bash
-  sudo zypper addrepo https://download.opensuse.org/repositories/security:forensics/openSUSE_Tumbleweed/security:forensics.repo
   sudo zypper refresh
   sudo zypper install datarecovery
   ```
