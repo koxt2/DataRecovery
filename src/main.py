@@ -17,7 +17,6 @@ class DatarecoveryApplication(Adw.Application):
     def __init__(self):
         super().__init__(
             application_id="com.github.koxt2.datarecovery",
-            application_version=VERSION,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
         )
 
@@ -44,5 +43,9 @@ class DatarecoveryApplication(Adw.Application):
 
 
 def main():
+    if "--version" in sys.argv:
+        print(VERSION)
+        return 0
+
     app = DatarecoveryApplication()
     return app.run(sys.argv)
