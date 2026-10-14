@@ -1,5 +1,9 @@
 # Changelog
 
+## [unreleased]
+### Fixed
+- datarecovery --version now reports correctly
+
 ## [v0.7.1] - 2026-10-05
 ### Changed
 - metainfo file update

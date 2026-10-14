@@ -46,7 +46,7 @@ You can also recover files from existing images, check the SMART report for your
 <details>
 <summary><b>openSUSE</b></summary>
 
-- Tumbleweed  
+- Tumbleweed, Slowroll  
   ```bash
   sudo zypper refresh
   sudo zypper install datarecovery

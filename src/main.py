@@ -8,6 +8,7 @@ import gi
 gi.require_version("Adw", "1")
 from gi.repository import Adw, Gio
 
+from .config import VERSION
 from .initializer import Initializer
 from .window import DatarecoveryWindow
 
@@ -16,6 +17,7 @@ class DatarecoveryApplication(Adw.Application):
     def __init__(self):
         super().__init__(
             application_id="com.github.koxt2.datarecovery",
+            application_version=VERSION,
             flags=Gio.ApplicationFlags.DEFAULT_FLAGS,
         )
 
