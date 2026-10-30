@@ -84,6 +84,17 @@
   </provides>
   
   <releases>
+    <release version="0.7.2" date="2026-10-30">
+      <description>
+        <p>Release v0.7.2</p>
+        <ul>
+          <li>Man page</li>
+          <li>datarecovery --version now reports correctly</li>
+          <li>Moved datarecovery-pkexec-helper from /usr/bin to /usr/libexec</li>
+          <li>Updated license address</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.7.1" date="2026-10-05">
       <description>
         <p>Release v0.7.1</p>
