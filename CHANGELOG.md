@@ -1,8 +1,15 @@
 # Changelog
 
 ## [unreleased]
+### Added
+- Man page
+
 ### Fixed
 - datarecovery --version now reports correctly
+
+### Changed
+- Moved datarecovery-pkexec-helper from /usr/bin to /usr/libexec
+- Updated license address
 
 ## [v0.7.1] - 2026-10-05
 ### Changed

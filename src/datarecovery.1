@@ -1,0 +1,20 @@
+.TH DATARECOVERY 1
+.SH NAME
+DataRecovery \- A GTK4/Libadwaita GUI application for data recovery using ddrescue and PhotoRec
+.SH SYNOPSIS
+.B datarecovery
+[OPTIONS]
+.SH DESCRIPTION
+A GTK4/Libadwaita frontend for Photorec.
+It uses ddrescue to create an image of the drive, Photorec to recover all files, optionally removes duplicates using rdfind, and organises them by file type.
+You can also recover files from existing images, check the SMART report for your drives, choose which file types you want to recover, and add custom signatures for file types that are missing from the supported list.
+.SH OPTIONS
+.TP
+.B \-\-version
+Show the program version and exit.
+.SH KEYBINDINGS
+.TP
+.B Ctrl-Q
+Quit the application.
+.SH AUTHORS
+Richard Potts <koxt2@protonmail.com>

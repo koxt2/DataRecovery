@@ -34,6 +34,10 @@ configure_file(
   install_dir: moduledir
 )
 
+# Install man page
+install_data('datarecovery.1',
+  install_dir: get_option('mandir') / 'man1')
+
 datarecovery_sources = [
   '__init__.py',
   'main.py',

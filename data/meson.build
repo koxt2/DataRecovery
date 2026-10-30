@@ -16,7 +16,7 @@ install_data('com.github.koxt2.datarecovery.metainfo.xml',
 
 # Install pkexec helper script
 install_data('datarecovery-pkexec-helper',
-  install_dir: get_option('bindir'),
+  install_dir: get_option('libexecdir'),
   install_mode: 'rwxr-xr-x')
 
 # Configure and install D-Bus service file
